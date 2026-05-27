@@ -1,44 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prince Education</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <div class="brand">
-          <div class="brand-mark" aria-hidden="true"></div>
-          <div>
-            <h1>Prince Education</h1>
-            <div class="pill">Secure payments</div>
-          </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prince Education - international language training and professional development in the Greater Bay Area and beyond.">
+    <title>Prince Education | International Education Centre</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.svg" alt="Prince Education logo">
+                <span class="logo-text">Prince Education<span class="logo-tagline">Every student matters. Every moment counts.</span></span>
+            </a>
+            <button type="button" class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="courses.html">Courses</a>
+                <a href="campuses.html">Campuses</a>
+                <a href="team.html">Our Team</a>
+                <a href="products-services.html">Products &amp; Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html" class="nav-cart" aria-label="Cart">
+                    Cart <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+            </nav>
         </div>
-      </header>
+    </header>
 
-      <div class="card">
-        <h2>AALA 2026 credit card payment</h2>
-        <p>
-          To pay for AALA 2026 by credit card, please start from the AALA registration page,
-          then continue to checkout here.
-        </p>
-        <div class="actions">
-          <a class="btn-secondary" href="checkout.html" style="display:inline-block;text-decoration:none;padding:10px 14px;">
-            Open checkout
-          </a>
+    <section class="hero">
+        <h1>Prince Education</h1>
+        <p class="lead">International language training and professional development across the Hong Kong-Macau Greater Bay Area.</p>
+        <p class="motto">Every student matters. Every moment counts.</p>
+        <p style="margin-top: 0.75rem; font-size: 0.95rem; opacity: 0.92;">Operated by Hong Kong-Macau International Education Research Institute Limited</p>
+    </section>
+
+    <main class="container">
+        <section class="content-block">
+            <h2>Welcome to Prince Education</h2>
+            <p>Founded in 2014 and expanded across Zhuhai, Hengqin, Hong Kong, and Shanghai, Prince Education is built by experienced international educators. We focus on learner experience, long-term growth, and rigorous course design - supported by our proprietary learning app and interactive classrooms.</p>
+            <p>Our graduates and clients have progressed to leading universities in North America, the United Kingdom, Canada, Singapore, Japan, South Korea, Hong Kong, and Macau, and have strengthened their professional profiles through workplace English and executive programmes.</p>
+            <div class="quick-links">
+                <a href="about.html" class="quick-link-card">
+                    <h3>About Us</h3>
+                    <p>Our story, philosophy, and milestones since 2014.</p>
+                </a>
+                <a href="courses.html" class="quick-link-card">
+                    <h3>Course Programmes</h3>
+                    <p>General English, exam preparation, and corporate training.</p>
+                </a>
+                <a href="products-services.html" class="quick-link-card">
+                    <h3>Products &amp; Services</h3>
+                    <p>Training solutions and collaboration services.</p>
+                </a>
+                <a href="contact.html" class="quick-link-card">
+                    <h3>Contact Us</h3>
+                    <p>Visit our campuses or reach our advisory team.</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="content-block">
+            <h2>Why Prince Education</h2>
+            <ul>
+                <li><strong>Expert faculty</strong> - IELTS, TOEFL, and business English specialists with overseas teaching experience</li>
+                <li><strong>Blended delivery</strong> - On-campus small groups, live online classes, and app-supported self-study</li>
+                <li><strong>Bay Area presence</strong> - Campuses serving Macau, Zhuhai, and Hengqin learners and professionals</li>
+                <li><strong>Proven outcomes</strong> - Strong test-score results and university placement track record</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>Get started</h2>
+            <p>Explore our programmes, campuses, and faculty. For conference collaborations and online registration payments, visit <a href="products-services.html">Products &amp; Services</a>.</p>
+            <div class="btn-row">
+                <a href="courses.html" class="btn btn-primary">View courses</a>
+                <a href="contact.html" class="btn btn-secondary">Contact us</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div>
+                    <h4>Prince Education</h4>
+                    <p>International language training and professional development.</p>
+                </div>
+                <div>
+                    <h4>Quick links</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="products-services.html">Products &amp; Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="refund-policy.html">Refund &amp; Cancellation Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p>Email: <a href="mailto:contact@princeeducation.com">contact@princeeducation.com</a><br>
+                    Phone: <a href="tel:+867568880000">+86 756-888-0000</a> <em>(update before launch)</em></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2014-2026 Prince Education. All rights reserved. | Hengqin: Poly International Plaza, Tower 1, Units 1513-1515, Zhuhai, Guangdong, China</p>
+            </div>
         </div>
-      </div>
-
-      <div class="footer">
-        This site forwards to the bank gateway and does not store card details.
-      </div>
-    </div>
-  </body>
+    </footer>
+    <script src="cart.js"></script>
+    <script src="site-nav.js"></script>
+</body>
 </html>
-

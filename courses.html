@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prince Education course programmes - IELTS, TOEFL, business English, and corporate training.">
+    <title>Courses | Prince Education</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.svg" alt="Prince Education logo">
+                <span class="logo-text">Prince Education<span class="logo-tagline">Every student matters. Every moment counts.</span></span>
+            </a>
+            <button type="button" class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="courses.html" class="active">Courses</a>
+                <a href="campuses.html">Campuses</a>
+                <a href="team.html">Our Team</a>
+                <a href="products-services.html">Products &amp; Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html" class="nav-cart" aria-label="Cart">
+                    Cart <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Course Programmes</h1>
+        <p class="lead">Comprehensive English and professional development pathways for academic, career, and corporate goals.</p>
+    </section>
+
+    <main class="container">
+        <p class="page-intro">Programmes are delivered in small groups with full-time faculty, in English-medium classrooms designed to reflect authentic international learning environments. Contact us for schedules, placement, and pricing.</p>
+
+        <section class="content-block">
+            <h2>Competency &amp; General English</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>General English</h3>
+                    <p>Integrated skills for daily, academic, and social communication; suitable for foundation through advanced levels.</p>
+                </div>
+                <div class="card">
+                    <h3>Business English</h3>
+                    <p>Workplace communication, meetings, presentations, and professional correspondence (aligned with BEC competencies).</p>
+                </div>
+                <div class="card">
+                    <h3>English for Interviews</h3>
+                    <p>Structured preparation for university admissions and job interviews, including mock interviews and feedback.</p>
+                </div>
+                <div class="card">
+                    <h3>English &amp; American Literature</h3>
+                    <p>Critical reading and analytical writing through selected literary texts for advanced learners.</p>
+                </div>
+                <div class="card">
+                    <h3>Customized Corporate Training</h3>
+                    <p>Tailored syllabi for enterprises; on-site or at our centres. Past clients include major manufacturers in Zhuhai.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-block">
+            <h2>Examination &amp; Certification Preparation</h2>
+            <ul>
+                <li><strong>IELTS</strong> - Academic and General Training modules</li>
+                <li><strong>TOEFL iBT</strong> - Integrated skills and test strategies</li>
+                <li><strong>TOEIC</strong> - Workplace English assessment preparation</li>
+                <li><strong>GRE / GMAT</strong> - Verbal and analytical writing support</li>
+                <li><strong>CET-4 / CET-6</strong> - National college English tests (China)</li>
+                <li><strong>Postgraduate entrance English</strong> - China national postgraduate examination support</li>
+                <li><strong>BEC</strong> - Cambridge Business English (Preliminary, Vantage, Higher)</li>
+                <li><strong>Interpretation certificates</strong> - Intermediate and advanced interpreting</li>
+                <li><strong>CATTI</strong> - China Accreditation Test for Translators and Interpreters</li>
+                <li><strong>TESOL</strong> - International English teaching qualification pathways</li>
+            </ul>
+            <p>See <a href="partners.html">partners and authorizations</a> for pathway programmes including OSSD and international MBA support.</p>
+        </section>
+
+        <section class="content-block">
+            <h2>How to Enrol</h2>
+            <p>Course fees vary by programme intensity, level, and delivery mode. For a quotation and placement assessment, please <a href="contact.html">contact our advisory team</a> or visit your nearest <a href="campuses.html">campus</a>.</p>
+            <div class="btn-row">
+                <a href="contact.html" class="btn btn-primary">Request course information</a>
+                <a href="products-services.html" class="btn btn-secondary">View all products &amp; services</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div><h4>Prince Education</h4><p>International language training and professional development.</p></div>
+                <div><h4>Quick links</h4><ul><li><a href="about.html">About</a></li><li><a href="products-services.html">Products &amp; Services</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+                <div><h4>Legal</h4><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li><li><a href="refund-policy.html">Refund &amp; Cancellation Policy</a></li></ul></div>
+                <div><h4>Contact</h4><p>Email: <a href="mailto:contact@princeeducation.com">contact@princeeducation.com</a><br>Phone: <a href="tel:+867568880000">+86 756-888-0000</a></p></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2014-2026 Prince Education. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script src="cart.js"></script>
+    <script src="site-nav.js"></script>
+</body>
+</html>

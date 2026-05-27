@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prince Education products and services - language training, corporate programmes, and partner collaborations.">
+    <title>Products &amp; Services | Prince Education</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.svg" alt="Prince Education logo">
+                <span class="logo-text">Prince Education<span class="logo-tagline">Every student matters. Every moment counts.</span></span>
+            </a>
+            <button type="button" class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="courses.html">Courses</a>
+                <a href="campuses.html">Campuses</a>
+                <a href="team.html">Our Team</a>
+                <a href="products-services.html" class="active">Products &amp; Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html" class="nav-cart" aria-label="Cart">
+                    Cart <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Products &amp; Services</h1>
+        <p class="lead">Transparent offerings for education clients and partner collaborations. Prices below are indicative; final amounts are confirmed at enrolment or on partner checkout pages.</p>
+    </section>
+
+    <main class="container">
+        <section class="content-block">
+            <h2>Language Training &amp; Professional Development</h2>
+            <p>Prince Education provides paid educational services including:</p>
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Description</th>
+                            <th>Pricing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>General &amp; competency English</td>
+                            <td>Small-group classes; on-campus or online</td>
+                            <td>Contact for quote (varies by level &amp; hours)</td>
+                        </tr>
+                        <tr>
+                            <td>IELTS / TOEFL / TOEIC preparation</td>
+                            <td>Exam-focused programmes with mock tests</td>
+                            <td>Contact for quote</td>
+                        </tr>
+                        <tr>
+                            <td>Business English &amp; BEC</td>
+                            <td>Workplace and certification preparation</td>
+                            <td>Contact for quote</td>
+                        </tr>
+                        <tr>
+                            <td>Corporate customized training</td>
+                            <td>On-site or centre-based; syllabus tailored to employer</td>
+                            <td>Contract-based; contact for proposal</td>
+                        </tr>
+                        <tr>
+                            <td>Study-abroad &amp; pathway advising</td>
+                            <td>OSSD, MBA pathway, and application support</td>
+                            <td>Package fees; contact for details</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Payment for training programmes is arranged by invoice, bank transfer, or approved local payment methods as stated in your enrolment agreement. See our <a href="refund-policy.html">Refund &amp; Cancellation Policy</a>.</p>
+            <a href="contact.html" class="btn btn-primary">Enquire about courses</a>
+        </section>
+
+        <section class="content-block conference-box" id="aala-conference">
+            <h2>Collaborations</h2>
+            <h3>AALA 2026 International Conference (collaboration)</h3>
+            <p><strong>The 12th International Conference of the Asian Association for Language Assessment (AALA)</strong></p>
+            <ul>
+                <li><strong>Dates:</strong> 18-20 September 2026</li>
+                <li><strong>Venue:</strong> City University of Macau, Macau SAR</li>
+                <li><strong>Theme:</strong> Humanistic Approach to Assessment, Standards, Innovation, and Accountability</li>
+                <li><strong>Audience:</strong> Researchers, educators, graduate students, and assessment professionals</li>
+            </ul>
+            <p>Prince Education is a collaborator for AALA 2026. <strong>Registration information is collected on the AALA conference website</strong>; <strong>credit card payment is completed on this Prince Education website</strong> through our secure bank payment gateway.</p>
+
+            <div class="btn-row" style="margin-top: 1rem;">
+                <a class="btn btn-primary" href="https://aalaconference.com/registration.html" target="_blank" rel="noopener noreferrer">Register on AALA (information)</a>
+                <a class="btn btn-primary" href="checkout.html">Pay on Prince Education</a>
+                <button type="button" class="btn btn-secondary" id="addAalaRegBtn">Add to cart</button>
+            </div>
+
+            <h3>Registration fees (summary)</h3>
+            <p class="footnote">Fees include the conference programme, conference materials, reception, tea breaks, and lunches during the two-day main conference. Local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders. Early-bird deadlines apply. Full details on the conference site.</p>
+
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Currency</th>
+                            <th>Early bird</th>
+                            <th>Regular</th>
+                            <th>Early bird bundle (reg. + banquet)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2"><strong>Presenter</strong><br><small>Non-Macau local / Macau local</small></td>
+                            <td>USD</td>
+                            <td>185 / 135</td>
+                            <td>200 / 150</td>
+                            <td>250 / 200</td>
+                        </tr>
+                        <tr>
+                            <td>MOP/HKD/CNY</td>
+                            <td>1,480 / 1,080</td>
+                            <td>1,600 / 1,200</td>
+                            <td>2,000 / 1,600</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Student presenter</strong></td>
+                            <td>USD</td>
+                            <td>90 / 65</td>
+                            <td>110 / 85</td>
+                            <td>155 / 130</td>
+                        </tr>
+                        <tr>
+                            <td>MOP/HKD/CNY</td>
+                            <td>720 / 520</td>
+                            <td>880 / 680</td>
+                            <td>1,240 / 1,040</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Participant (non-presenting)</strong></td>
+                            <td>USD</td>
+                            <td>65</td>
+                            <td>85</td>
+                            <td>130</td>
+                        </tr>
+                        <tr>
+                            <td>MOP/HKD/CNY</td>
+                            <td>520</td>
+                            <td>680</td>
+                            <td>1,040</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Optional add-ons</h3>
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>MOP / HKD / CNY</th>
+                            <th>USD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Each pre-conference workshop (18 Sep)</td>
+                            <td>600</td>
+                            <td>75</td>
+                        </tr>
+                        <tr>
+                            <td>Conference banquet (19 Sep evening)</td>
+                            <td>600</td>
+                            <td>75</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>How to register and pay</h3>
+            <ol>
+                <li>Complete your registration details on <a href="https://aalaconference.com/registration.html" target="_blank" rel="noopener noreferrer">aalaconference.com/registration.html</a>.</li>
+                <li>When you choose credit card payment, you will be directed to <strong>Prince Education checkout</strong> on this website.</li>
+                <li>Confirm your name, affiliation, fee category amount, and click <strong>Pay via bank gateway</strong>.</li>
+                <li>Alternatively, add the registration to your cart here and proceed to <a href="checkout.html">checkout</a>.</li>
+            </ol>
+
+            <div class="btn-row">
+                <a href="checkout.html" class="btn btn-primary">Go to checkout</a>
+                <a href="https://aalaconference.com/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">AALA conference homepage</a>
+            </div>
+
+            <p class="external-notice">
+                <strong>Note:</strong> The AALA website collects registration information only. Card payment for AALA 2026 is processed on Prince Education via the bank gateway. See our <a href="refund-policy.html#conference">Refund Policy (conference section)</a>.
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2>Payment methods summary</h2>
+            <ul>
+                <li><strong>Training programmes:</strong> Bank transfer, invoice, or methods agreed in your enrolment contract</li>
+                <li><strong>AALA 2026 conference:</strong> Register on AALA; pay by credit card on <a href="checkout.html">Prince Education checkout</a> (bank gateway).</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div><h4>Prince Education</h4><p>International language training and professional development.</p></div>
+                <div><h4>Quick links</h4><ul><li><a href="about.html">About</a></li><li><a href="products-services.html">Products &amp; Services</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+                <div><h4>Legal</h4><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li><li><a href="refund-policy.html">Refund &amp; Cancellation Policy</a></li></ul></div>
+                <div><h4>Contact</h4><p>Email: <a href="mailto:contact@princeeducation.com">contact@princeeducation.com</a><br>Phone: <a href="tel:+867568880000">+86 756-888-0000</a></p></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2014-2026 Prince Education. All rights reserved.</p></div>
+        </div>
+    </footer>
+    <script src="cart.js"></script>
+    <script src="site-nav.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (typeof PrinceCart === "undefined") return;
+        var btn = document.getElementById("addAalaRegBtn");
+        if (!btn) return;
+
+        btn.addEventListener("click", function () {
+            PrinceCart.add({
+                id: "aala-2026-registration",
+                title: "AALA 2026 Conference Registration (online payment)",
+                note: "Register on AALA first, then pay on Prince Education checkout.",
+                priceNote: "Fees shown on this page"
+            });
+            updateCartBadge();
+            btn.textContent = "Added to cart";
+            btn.disabled = true;
+        });
+    });
+    </script>
+</body>
+</html>

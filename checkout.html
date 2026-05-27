@@ -1,120 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout — AALA 2026</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <div class="brand">
-          <div class="brand-mark" aria-hidden="true"></div>
-          <div>
-            <h1>Prince Education</h1>
-            <div class="pill">AALA 2026 — Checkout</div>
-          </div>
-        </div>
-        <div class="pill">No card details collected here</div>
-      </header>
-
-      <div class="grid">
-        <section class="card" aria-label="Payer details">
-          <h2>Registration details (from AALA)</h2>
-          <p>
-            Confirm your registration details and payment amount. When you click Pay, you will be
-            forwarded to the bank gateway.
-          </p>
-
-          <div class="row">
-            <div>
-              <label for="attendeeName">Name</label>
-              <input id="attendeeName" type="text" autocomplete="name" />
-            </div>
-            <div>
-              <label for="attendeeAffiliation">Affiliation</label>
-              <input id="attendeeAffiliation" type="text" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="submissionId">Submission ID (optional)</label>
-              <input id="submissionId" type="text" />
-            </div>
-            <div>
-              <label for="currency">Currency</label>
-              <select id="currency">
-                <option value="MOP">MOP</option>
-                <option value="HKD">HKD</option>
-                <option value="CNY">CNY</option>
-                <option value="USD">USD</option>
-              </select>
-            </div>
-          </div>
-
-          <h2 style="margin-top: 18px;">Cart</h2>
-          <p>Select the items you are paying for. Amounts are examples and must be aligned with your merchant setup.</p>
-
-          <div class="items" id="items"></div>
-
-          <div class="total">
-            <div>
-              <div style="color: var(--muted); font-size: 12px;">Total</div>
-              <div class="amount" id="totalAmount">0</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="color: var(--muted); font-size: 12px;">Order ID</div>
-              <div id="orderId" style="font-weight:700;">-</div>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="btn-primary" id="payBtn" type="button">Pay via bank gateway</button>
-            <a class="btn-secondary" href="index.html" style="display:inline-block;text-decoration:none;padding:10px 14px;">
-              Back
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Secure checkout for Prince Education products and AALA 2026 conference registration.">
+    <title>Checkout | Prince Education</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.svg" alt="Prince Education logo">
+                <span class="logo-text">Prince Education<span class="logo-tagline">Every student matters. Every moment counts.</span></span>
             </a>
-          </div>
+            <button type="button" class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="courses.html">Courses</a>
+                <a href="campuses.html">Campuses</a>
+                <a href="team.html">Our Team</a>
+                <a href="products-services.html">Products &amp; Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="cart.html" class="nav-cart" aria-label="Cart">
+                    Cart <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
 
-          <div class="warning" id="configWarning" style="display:none;"></div>
-          <div class="footer">
-            By continuing, you will be redirected to the payment gateway operated by the bank.
-          </div>
-        </section>
+    <section class="hero">
+        <h1>Secure Checkout</h1>
+        <p class="lead">Complete your purchase on Prince Education. Card payment is processed by our bank payment gateway (no card details stored on this site).</p>
+    </section>
 
-        <aside class="card" aria-label="Help">
-          <h2>What happens next</h2>
-          <p>
-            - Clicking Pay creates a POST form and submits it to the gateway.<br />
-            - The gateway processes the card payment.<br />
-            - You return to Prince Education on success or cancellation.
-          </p>
-          <h2 style="margin-top: 16px;">Support</h2>
-          <p>
-            If you have questions about registration details, please contact the AALA 2026 organizers.
-          </p>
-        </aside>
-      </div>
-    </div>
+    <main class="container">
+        <div class="checkout-grid">
+            <section class="content-block">
+                <h2>Registration / order details</h2>
+                <p id="checkoutContext">Confirm your details and payment amount, then click Pay to continue to the bank gateway.</p>
 
+                <div class="checkout-form-row">
+                    <div>
+                        <label for="attendeeName">Full name</label>
+                        <input id="attendeeName" type="text" autocomplete="name" required>
+                    </div>
+                    <div>
+                        <label for="attendeeAffiliation">Affiliation</label>
+                        <input id="attendeeAffiliation" type="text" required>
+                    </div>
+                </div>
+                <div class="checkout-form-row">
+                    <div>
+                        <label for="submissionId">Submission ID (if presenting)</label>
+                        <input id="submissionId" type="text">
+                    </div>
+                    <div>
+                        <label for="currency">Currency</label>
+                        <select id="currency">
+                            <option value="MOP">MOP</option>
+                            <option value="HKD">HKD</option>
+                            <option value="CNY">CNY</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 1.25rem;">Items</h3>
+                <p class="footnote">Select the conference fees and add-ons you are paying for. Amounts must match your registration category on the AALA site.</p>
+                <div id="items"></div>
+
+                <div class="checkout-total-bar">
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.88rem;">Total</div>
+                        <div class="amount" id="totalAmount">0</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color: var(--text-muted); font-size: 0.88rem;">Order ID</div>
+                        <div id="orderId" style="font-weight: 700;">-</div>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button type="button" class="btn btn-primary" id="payBtn">Pay via bank gateway</button>
+                    <a class="btn btn-secondary" href="products-services.html">Back to products</a>
+                </div>
+                <div class="config-warning" id="configWarning" style="display: none;"></div>
+            </section>
+
+            <aside class="content-block">
+                <h2>How payment works</h2>
+                <ol>
+                    <li>Complete registration information on the <a href="https://aalaconference.com/registration.html" target="_blank" rel="noopener noreferrer">AALA registration page</a> (if you have not already).</li>
+                    <li>Return here to pay by credit card through Prince Education.</li>
+                    <li>Click Pay - you will be forwarded to the secure bank gateway.</li>
+                    <li>After payment, you will return to Prince Education confirmation pages.</li>
+                </ol>
+                <p class="footnote">Questions about conference registration? Contact the AALA 2026 organizers. Questions about payment? Contact Prince Education.</p>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-bottom">
+                <p>&copy; 2014-2026 Prince Education. | <a href="privacy-policy.html">Privacy</a> | <a href="terms-of-service.html">Terms</a> | <a href="refund-policy.html">Refunds</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script src="site-nav.js"></script>
     <script>
-      (function () {
-        // --- Merchant configuration (REQUIRED) ---
+    (function () {
         var GATEWAY_URL = "https://secure.lusoibank.com/payment-gateway";
         var MERCHANT_ID = "PRINCE_MERCHANT_ID";
         var RETURN_URL = window.location.origin + "/payment-success.html";
         var CANCEL_URL = window.location.origin + "/payment-cancelled.html";
 
-        // --- Cart defaults (examples; align with AALA pricing and merchant config) ---
         var cartModel = [
-          { key: "registration", label: "Conference registration", unitAmounts: [100, 200, 300], selected: true, amount: 0 },
-          { key: "workshop", label: "Workshop add-on", unitAmounts: [50, 80], selected: false, amount: 0 },
-          { key: "banquet", label: "Banquet add-on", unitAmounts: [40], selected: false, amount: 0 }
+            { key: "registration", label: "AALA 2026 conference registration", unitAmounts: [520, 680, 1040, 1080, 1200, 1480, 1600], selected: true, amount: 0 },
+            { key: "workshop", label: "Pre-conference workshop (18 Sep)", unitAmounts: [600, 75], selected: false, amount: 0 },
+            { key: "banquet", label: "Conference banquet (19 Sep)", unitAmounts: [600, 75], selected: false, amount: 0 }
         ];
 
         var qs = new URLSearchParams(window.location.search);
@@ -129,168 +138,164 @@
         var configWarningEl = document.getElementById("configWarning");
 
         function getString(key) {
-          var v = qs.get(key);
-          return v == null ? "" : String(v);
+            var v = qs.get(key);
+            return v == null ? "" : String(v);
         }
 
         function buildOrderId() {
-          var fromAala = getString("orderId");
-          if (fromAala) return fromAala;
-          var sid = getString("submissionId") || "NA";
-          return "AALA2026-" + sid + "-" + Date.now().toString(36).toUpperCase();
+            var fromAala = getString("orderId");
+            if (fromAala) return fromAala;
+            var sid = getString("submissionId") || submissionIdInput.value.trim() || "NA";
+            return "AALA2026-" + sid + "-" + Date.now().toString(36).toUpperCase();
         }
 
         function formatMoney(amount, currency) {
-          if (!currency) return String(amount);
-          return currency + " " + String(amount);
+            return (currency || "") + " " + String(amount);
         }
 
         function renderItems() {
-          itemsEl.innerHTML = "";
-          cartModel.forEach(function (item) {
-            var row = document.createElement("div");
-            row.className = "item";
+            itemsEl.innerHTML = "";
+            cartModel.forEach(function (item) {
+                var row = document.createElement("div");
+                row.className = "checkout-item-row";
 
-            var left = document.createElement("div");
-            var title = document.createElement("strong");
-            title.textContent = item.label;
-            var meta = document.createElement("div");
-            meta.innerHTML = "<small>Select amount and include/exclude</small>";
-            left.appendChild(title);
-            left.appendChild(meta);
+                var left = document.createElement("div");
+                var title = document.createElement("strong");
+                title.textContent = item.label;
+                left.appendChild(title);
 
-            var right = document.createElement("div");
-            right.style.display = "flex";
-            right.style.alignItems = "center";
-            right.style.gap = "10px";
+                var right = document.createElement("div");
+                right.style.display = "flex";
+                right.style.alignItems = "center";
+                right.style.gap = "10px";
 
-            var include = document.createElement("input");
-            include.type = "checkbox";
-            include.checked = item.selected;
-            include.addEventListener("change", function () {
-              item.selected = include.checked;
-              if (!item.selected) item.amount = 0;
-              if (item.selected && item.amount === 0) item.amount = item.unitAmounts[0] || 0;
-              updateTotals();
+                var include = document.createElement("input");
+                include.type = "checkbox";
+                include.checked = item.selected;
+                include.addEventListener("change", function () {
+                    item.selected = include.checked;
+                    if (!item.selected) item.amount = 0;
+                    if (item.selected && item.amount === 0) item.amount = item.unitAmounts[0] || 0;
+                    updateTotals();
+                });
+
+                var amountSelect = document.createElement("select");
+                item.unitAmounts.forEach(function (amt) {
+                    var opt = document.createElement("option");
+                    opt.value = String(amt);
+                    opt.textContent = String(amt);
+                    amountSelect.appendChild(opt);
+                });
+                amountSelect.value = String(item.amount || item.unitAmounts[0] || 0);
+                amountSelect.addEventListener("change", function () {
+                    item.amount = Number(amountSelect.value) || 0;
+                    if (item.amount > 0) {
+                        item.selected = true;
+                        include.checked = true;
+                    }
+                    updateTotals();
+                });
+
+                right.appendChild(include);
+                right.appendChild(amountSelect);
+                row.appendChild(left);
+                row.appendChild(right);
+                itemsEl.appendChild(row);
             });
-
-            var amountSelect = document.createElement("select");
-            item.unitAmounts.forEach(function (amt) {
-              var opt = document.createElement("option");
-              opt.value = String(amt);
-              opt.textContent = String(amt);
-              amountSelect.appendChild(opt);
-            });
-            amountSelect.value = String(item.amount || item.unitAmounts[0] || 0);
-            amountSelect.addEventListener("change", function () {
-              item.amount = Number(amountSelect.value) || 0;
-              if (item.amount > 0) item.selected = true;
-              include.checked = item.selected;
-              updateTotals();
-            });
-
-            right.appendChild(include);
-            right.appendChild(amountSelect);
-
-            row.appendChild(left);
-            row.appendChild(right);
-            itemsEl.appendChild(row);
-          });
         }
 
         function totalAmount() {
-          return cartModel.reduce(function (sum, item) {
-            if (!item.selected) return sum;
-            return sum + (Number(item.amount) || 0);
-          }, 0);
+            return cartModel.reduce(function (sum, item) {
+                if (!item.selected) return sum;
+                return sum + (Number(item.amount) || 0);
+            }, 0);
         }
 
         function updateTotals() {
-          var currency = currencySelect.value;
-          var total = totalAmount();
-          totalAmountEl.textContent = formatMoney(total, currency);
+            totalAmountEl.textContent = formatMoney(totalAmount(), currencySelect.value);
         }
 
         function showConfigWarning(msg) {
-          configWarningEl.textContent = msg;
-          configWarningEl.style.display = "block";
+            configWarningEl.textContent = msg;
+            configWarningEl.style.display = "block";
         }
 
-        // Prefill from AALA redirect (if present)
         attendeeNameInput.value = getString("attendeeName");
         attendeeAffiliationInput.value = getString("attendeeAffiliation");
         submissionIdInput.value = getString("submissionId");
         var currencyFromAala = getString("currency");
         if (currencyFromAala) currencySelect.value = currencyFromAala;
 
-        // If AALA passes a total amount, prefill the registration item to that amount.
         var amountFromAala = Number(getString("amount") || 0);
         if (amountFromAala > 0) {
-          cartModel[0].selected = true;
-          cartModel[0].unitAmounts = [amountFromAala];
-          cartModel[0].amount = amountFromAala;
+            cartModel[0].selected = true;
+            cartModel[0].unitAmounts = [amountFromAala];
+            cartModel[0].amount = amountFromAala;
+            document.getElementById("checkoutContext").textContent =
+                "Your registration details were received from the AALA registration page. Confirm the amount and pay below.";
+        } else if (typeof PrinceCart !== "undefined" && PrinceCart.get().length) {
+            document.getElementById("checkoutContext").textContent =
+                "You have items in your cart. Confirm details and pay below.";
+            var cartItem = PrinceCart.get().find(function (x) { return x.id === "aala-2026-registration"; });
+            if (cartItem) cartModel[0].selected = true;
         } else {
-          cartModel[0].amount = cartModel[0].unitAmounts[0] || 0;
+            cartModel[0].amount = cartModel[0].unitAmounts[0] || 0;
         }
 
         orderIdEl.textContent = buildOrderId();
         renderItems();
         updateTotals();
+        currencySelect.addEventListener("change", updateTotals);
 
         payBtn.addEventListener("click", function () {
-          var name = attendeeNameInput.value.trim();
-          var affiliation = attendeeAffiliationInput.value.trim();
-          var submissionId = submissionIdInput.value.trim();
-          var currency = currencySelect.value;
-          var total = totalAmount();
-          var orderId = orderIdEl.textContent;
+            var name = attendeeNameInput.value.trim();
+            var affiliation = attendeeAffiliationInput.value.trim();
+            var submissionId = submissionIdInput.value.trim();
+            var currency = currencySelect.value;
+            var total = totalAmount();
+            var orderId = orderIdEl.textContent;
 
-          if (!name || !affiliation) {
-            window.alert("Please fill in your name and affiliation.");
-            return;
-          }
-          if (!total || total <= 0) {
-            window.alert("Please select at least one item with a positive amount.");
-            return;
-          }
-          if (!MERCHANT_ID || MERCHANT_ID === "PRINCE_MERCHANT_ID") {
-            showConfigWarning("Merchant configuration is not set. Please set MERCHANT_ID in checkout.html before going live.");
-            return;
-          }
+            if (!name || !affiliation) {
+                window.alert("Please enter your name and affiliation.");
+                return;
+            }
+            if (!total || total <= 0) {
+                window.alert("Please select at least one item with a positive amount.");
+                return;
+            }
+            if (!MERCHANT_ID || MERCHANT_ID === "PRINCE_MERCHANT_ID") {
+                showConfigWarning("Merchant ID is not configured yet. Set MERCHANT_ID in checkout.html before accepting live payments.");
+                return;
+            }
 
-          // Payload shape follows the existing Luso payment gateway pattern used previously.
-          // Merchant-specific fields (hash/signature/etc.) must be added if required by the bank.
-          var payload = {
-            merchantId: MERCHANT_ID,
-            amount: String(total),
-            currency: currency,
-            orderId: orderId,
-            returnUrl: RETURN_URL,
-            cancelUrl: CANCEL_URL,
-            payerName: name,
-            payerAffiliation: affiliation,
-            submissionId: submissionId,
-            description: "AALA 2026 registration payment"
-          };
+            var payload = {
+                merchantId: MERCHANT_ID,
+                amount: String(total),
+                currency: currency,
+                orderId: orderId,
+                returnUrl: RETURN_URL,
+                cancelUrl: CANCEL_URL,
+                payerName: name,
+                payerAffiliation: affiliation,
+                submissionId: submissionId,
+                description: "AALA 2026 registration payment via Prince Education"
+            };
 
-          var hiddenPostForm = document.createElement("form");
-          hiddenPostForm.method = "POST";
-          hiddenPostForm.action = GATEWAY_URL;
-          hiddenPostForm.style.display = "none";
-
-          Object.keys(payload).forEach(function (key) {
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = payload[key];
-            hiddenPostForm.appendChild(input);
-          });
-
-          document.body.appendChild(hiddenPostForm);
-          hiddenPostForm.submit();
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = GATEWAY_URL;
+            form.style.display = "none";
+            Object.keys(payload).forEach(function (key) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = payload[key];
+                form.appendChild(input);
+            });
+            document.body.appendChild(form);
+            form.submit();
         });
-      })();
+    })();
     </script>
-  </body>
+</body>
 </html>
-

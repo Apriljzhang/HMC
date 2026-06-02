@@ -28,7 +28,7 @@
 
     <section class="hero">
         <h1>Products &amp; Services</h1>
-        <p class="lead">Simple and transparent services with secure online card payment.</p>
+        <p class="lead">Browse services and complete online purchase by card.</p>
     </section>
 
     <main class="container">
@@ -36,7 +36,7 @@
             <h2>Language Training &amp; Professional Development</h2>
             <p>港澳中研國際教育研究院有限公司 provides paid educational services including:</p>
             <div class="table-scroll">
-                <table class="data-table">
+                <table class="data-table" id="servicesTable">
                     <thead>
                         <tr>
                             <th>Service</th>
@@ -45,43 +45,90 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr data-service-id="general-english" data-service-name="General &amp; competency English">
                             <td>General &amp; competency English</td>
                             <td>Small-group classes; in-person or online</td>
                             <td>Contact for quote (varies by level &amp; hours)</td>
                         </tr>
-                        <tr>
+                        <tr data-service-id="exam-prep" data-service-name="IELTS / TOEFL / TOEIC preparation">
                             <td>IELTS / TOEFL / TOEIC preparation</td>
                             <td>Exam-focused programmes with mock tests</td>
                             <td>Contact for quote</td>
                         </tr>
-                        <tr>
+                        <tr data-service-id="business-english" data-service-name="Business English &amp; BEC">
                             <td>Business English &amp; BEC</td>
                             <td>Workplace and certification preparation</td>
                             <td>Contact for quote</td>
                         </tr>
-                        <tr>
+                        <tr data-service-id="corporate-training" data-service-name="Corporate customized training">
                             <td>Corporate customized training</td>
                             <td>On-site or online; syllabus tailored to employer</td>
                             <td>Contract-based; contact for proposal</td>
                         </tr>
-                        <tr>
+                        <tr data-service-id="pathway-advising" data-service-name="Study-abroad &amp; pathway advising">
                             <td>Study-abroad &amp; pathway advising</td>
                             <td>Academic pathway and application support</td>
                             <td>Package fees; contact for details</td>
                         </tr>
+                        <tr data-service-id="aala-registration" data-service-name="AALA Conference registration">
+                            <td>AALA Conference registration</td>
+                            <td>Conference registration payment</td>
+                            <td>Enter amount in online purchase below</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <p>Payment for training programmes can be arranged by invoice, bank transfer, or online card payment via our gateway below.</p>
+            <p>Payment for training programmes can be arranged by invoice, bank transfer, or online card payment in the section below.</p>
             <a href="about.html" class="btn btn-primary">Enquire about courses</a>
         </section>
 
         <section class="content-block">
-            <h2>Online payment gateway</h2>
-            <p>Enter your payment details and amount, then proceed to the secure bank payment gateway.</p>
+            <h2>Online purchase</h2>
+            <p>Select a project or service from the table above, enter your price, and add it to your cart. When ready, click Pay to complete payment by credit card.</p>
 
             <div class="checkout-form-row">
+                <div>
+                    <label for="purchaseService">Project / service</label>
+                    <select id="purchaseService"></select>
+                </div>
+                <div>
+                    <label for="purchasePrice">Price</label>
+                    <input id="purchasePrice" type="number" min="0.01" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+
+            <div class="checkout-form-row">
+                <div>
+                    <label for="purchaseCurrency">Currency</label>
+                    <select id="purchaseCurrency">
+                        <option value="MOP">MOP</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+                <div style="display: flex; align-items: flex-end;">
+                    <button type="button" class="btn btn-secondary" id="addToCartBtn">Add to cart</button>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 1.25rem;">Your cart</h3>
+            <div id="cartEmpty" class="footnote">Your cart is empty.</div>
+            <div id="cartListWrap" style="display: none;">
+                <div class="table-scroll">
+                    <table class="data-table" aria-label="Cart items">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartList"></tbody>
+                    </table>
+                </div>
+                <p style="margin-top: 0.75rem;"><strong>Total:</strong> <span id="cartTotal">0</span></p>
+            </div>
+
+            <div class="checkout-form-row" style="margin-top: 1.25rem;">
                 <div>
                     <label for="payerName">Full name</label>
                     <input id="payerName" type="text" autocomplete="name" required>
@@ -92,29 +139,8 @@
                 </div>
             </div>
 
-            <div class="checkout-form-row">
-                <div>
-                    <label for="paymentAmount">Payment amount</label>
-                    <input id="paymentAmount" type="number" min="1" step="0.01" required>
-                </div>
-                <div>
-                    <label for="paymentCurrency">Currency</label>
-                    <select id="paymentCurrency">
-                        <option value="MOP">MOP</option>
-                        <option value="USD">USD</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="checkout-form-row">
-                <div>
-                    <label for="paymentReference">Reference / note (optional)</label>
-                    <input id="paymentReference" type="text">
-                </div>
-            </div>
-
             <div class="btn-row">
-                <button type="button" class="btn btn-primary" id="payNowBtn">Pay via bank gateway</button>
+                <button type="button" class="btn btn-primary" id="payBtn">Pay</button>
             </div>
             <div class="config-warning" id="configWarning" style="display:none;"></div>
         </section>
@@ -131,6 +157,7 @@
             <div class="footer-bottom"><p>&copy; 2026 港澳中研國際教育研究院有限公司. All rights reserved.</p></div>
         </div>
     </footer>
+    <script src="cart.js"></script>
     <script src="site-nav.js"></script>
     <script>
     (function () {
@@ -139,12 +166,17 @@
         var RETURN_URL = window.location.origin + "/payment-success.html";
         var CANCEL_URL = window.location.origin + "/payment-cancelled.html";
 
+        var purchaseService = document.getElementById("purchaseService");
+        var purchasePrice = document.getElementById("purchasePrice");
+        var purchaseCurrency = document.getElementById("purchaseCurrency");
+        var addToCartBtn = document.getElementById("addToCartBtn");
+        var cartEmpty = document.getElementById("cartEmpty");
+        var cartListWrap = document.getElementById("cartListWrap");
+        var cartList = document.getElementById("cartList");
+        var cartTotal = document.getElementById("cartTotal");
         var payerName = document.getElementById("payerName");
         var payerAffiliation = document.getElementById("payerAffiliation");
-        var paymentAmount = document.getElementById("paymentAmount");
-        var paymentCurrency = document.getElementById("paymentCurrency");
-        var paymentReference = document.getElementById("paymentReference");
-        var payNowBtn = document.getElementById("payNowBtn");
+        var payBtn = document.getElementById("payBtn");
         var configWarning = document.getElementById("configWarning");
 
         function showWarning(msg) {
@@ -152,19 +184,99 @@
             configWarning.style.display = "block";
         }
 
-        payNowBtn.addEventListener("click", function () {
-            var name = payerName.value.trim();
-            var affiliation = payerAffiliation.value.trim();
-            var amount = Number(paymentAmount.value || 0);
-            var currency = paymentCurrency.value;
-            var reference = paymentReference.value.trim();
+        function hideWarning() {
+            configWarning.style.display = "none";
+        }
 
-            if (!name || !affiliation) {
-                window.alert("Please enter your full name and affiliation.");
+        function populateServiceSelect() {
+            var rows = document.querySelectorAll("#servicesTable tbody tr[data-service-id]");
+            rows.forEach(function (row) {
+                var opt = document.createElement("option");
+                opt.value = row.getAttribute("data-service-id");
+                opt.textContent = row.getAttribute("data-service-name");
+                purchaseService.appendChild(opt);
+            });
+        }
+
+        function formatMoney(amount, currency) {
+            return currency + " " + Number(amount).toFixed(2);
+        }
+
+        function renderCart() {
+            var cart = CompanyCart.get();
+            cartList.innerHTML = "";
+
+            if (!cart.length) {
+                cartEmpty.style.display = "block";
+                cartListWrap.style.display = "none";
+                cartTotal.textContent = "0";
                 return;
             }
+
+            cartEmpty.style.display = "none";
+            cartListWrap.style.display = "block";
+
+            var currency = cart[0].currency;
+            cart.forEach(function (item) {
+                var tr = document.createElement("tr");
+                tr.innerHTML =
+                    "<td>" + item.title + "</td>" +
+                    "<td>" + formatMoney(item.amount, item.currency) + "</td>" +
+                    "<td><button type=\"button\" class=\"btn btn-secondary\" data-remove=\"" + item.id + "\">Remove</button></td>";
+                cartList.appendChild(tr);
+            });
+
+            cartTotal.textContent = formatMoney(CompanyCart.total(), currency);
+
+            cartList.querySelectorAll("[data-remove]").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    CompanyCart.remove(btn.getAttribute("data-remove"));
+                    renderCart();
+                });
+            });
+        }
+
+        addToCartBtn.addEventListener("click", function () {
+            hideWarning();
+            var serviceId = purchaseService.value;
+            var serviceName = purchaseService.options[purchaseService.selectedIndex].textContent;
+            var amount = Number(purchasePrice.value || 0);
+            var currency = purchaseCurrency.value;
+
             if (!amount || amount <= 0) {
-                window.alert("Please enter a valid payment amount greater than 0.");
+                window.alert("Please enter a valid price greater than 0.");
+                return;
+            }
+
+            var cart = CompanyCart.get();
+            if (cart.length && cart[0].currency !== currency) {
+                window.alert("Please use the same currency for all items in your cart.");
+                return;
+            }
+
+            CompanyCart.add({
+                id: serviceId + "-" + Date.now(),
+                title: serviceName,
+                amount: amount,
+                currency: currency
+            });
+
+            purchasePrice.value = "";
+            renderCart();
+        });
+
+        payBtn.addEventListener("click", function () {
+            hideWarning();
+            var cart = CompanyCart.get();
+            var name = payerName.value.trim();
+            var affiliation = payerAffiliation.value.trim();
+
+            if (!cart.length) {
+                window.alert("Your cart is empty. Add a service before paying.");
+                return;
+            }
+            if (!name || !affiliation) {
+                window.alert("Please enter your full name and affiliation.");
                 return;
             }
             if (!MERCHANT_ID || MERCHANT_ID === "COMPANY_MERCHANT_ID") {
@@ -172,17 +284,22 @@
                 return;
             }
 
+            var total = CompanyCart.total();
+            var currency = cart[0].currency;
+            var description = cart.map(function (item) {
+                return item.title;
+            }).join("; ");
+
             var payload = {
                 merchantId: MERCHANT_ID,
-                amount: amount.toFixed(2),
+                amount: total.toFixed(2),
                 currency: currency,
                 orderId: "PAY-" + Date.now().toString(36).toUpperCase(),
                 returnUrl: RETURN_URL,
                 cancelUrl: CANCEL_URL,
                 payerName: name,
                 payerAffiliation: affiliation,
-                reference: reference,
-                description: "Payment via 港澳中研國際教育研究院有限公司"
+                description: description
             };
 
             var form = document.createElement("form");
@@ -201,6 +318,9 @@
             document.body.appendChild(form);
             form.submit();
         });
+
+        populateServiceSelect();
+        renderCart();
     })();
     </script>
 </body>

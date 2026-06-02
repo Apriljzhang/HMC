@@ -92,71 +92,7 @@
                 <li><strong>Theme:</strong> Humanistic Approach to Assessment, Standards, Innovation, and Accountability</li>
                 <li><strong>Audience:</strong> Researchers, educators, graduate students, and assessment professionals</li>
             </ul>
-            <p>Prince Education is a collaborator for AALA 2026. <strong>Registration information is collected on the AALA conference website</strong>; <strong>credit card payment is completed on this Prince Education website</strong> through our secure bank payment gateway.</p>
-
-            <div class="btn-row" style="margin-top: 1rem;">
-                <a class="btn btn-primary" href="https://aalaconference.com/registration.html" target="_blank" rel="noopener noreferrer">Register on AALA (information)</a>
-                <a class="btn btn-primary" href="checkout.html">Pay on Prince Education</a>
-                <button type="button" class="btn btn-secondary" id="addAalaRegBtn">Add to cart</button>
-            </div>
-
-            <h3>Registration fees (summary)</h3>
-            <p class="footnote">Fees include the conference programme, conference materials, reception, tea breaks, and lunches during the two-day main conference. Local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders. Early-bird deadlines apply. Full details on the conference site.</p>
-
-            <div class="table-scroll">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Currency</th>
-                            <th>Early bird</th>
-                            <th>Regular</th>
-                            <th>Early bird bundle (reg. + banquet)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td rowspan="2"><strong>Presenter</strong><br><small>Non-Macau local / Macau local</small></td>
-                            <td>USD</td>
-                            <td>185 / 135</td>
-                            <td>200 / 150</td>
-                            <td>250 / 200</td>
-                        </tr>
-                        <tr>
-                            <td>MOP/HKD/CNY</td>
-                            <td>1,480 / 1,080</td>
-                            <td>1,600 / 1,200</td>
-                            <td>2,000 / 1,600</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2"><strong>Student presenter</strong></td>
-                            <td>USD</td>
-                            <td>90 / 65</td>
-                            <td>110 / 85</td>
-                            <td>155 / 130</td>
-                        </tr>
-                        <tr>
-                            <td>MOP/HKD/CNY</td>
-                            <td>720 / 520</td>
-                            <td>880 / 680</td>
-                            <td>1,240 / 1,040</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2"><strong>Participant (non-presenting)</strong></td>
-                            <td>USD</td>
-                            <td>65</td>
-                            <td>85</td>
-                            <td>130</td>
-                        </tr>
-                        <tr>
-                            <td>MOP/HKD/CNY</td>
-                            <td>520</td>
-                            <td>680</td>
-                            <td>1,040</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <p>港澳中研國際教育研究院有限公司 is a collaborator for AALA 2026.</p>
 
             <h3>Optional add-ons</h3>
             <div class="table-scroll">
@@ -186,9 +122,7 @@
             <h3>How to register and pay</h3>
             <ol>
                 <li>Complete your registration details on <a href="https://aalaconference.com/registration.html" target="_blank" rel="noopener noreferrer">aalaconference.com/registration.html</a>.</li>
-                <li>When you choose credit card payment, you will be directed to <strong>Prince Education checkout</strong> on this website.</li>
-                <li>Confirm your name, affiliation, fee category amount, and click <strong>Pay via bank gateway</strong>.</li>
-                <li>Alternatively, add the registration to your cart here and proceed to <a href="checkout.html">checkout</a>.</li>
+                <li>When you choose credit card payment, you will be directed to <strong>港澳中研國際教育研究院有限公司 checkout</strong> on this website.</li>
             </ol>
 
             <div class="btn-row">
@@ -201,13 +135,6 @@
             </p>
         </section>
 
-        <section class="content-block">
-            <h2>Payment methods summary</h2>
-            <ul>
-                <li><strong>Training programmes:</strong> Bank transfer, invoice, or methods agreed in your enrolment contract</li>
-                <li><strong>AALA 2026 conference:</strong> Register on AALA; pay by credit card on <a href="checkout.html">Prince Education checkout</a> (bank gateway).</li>
-            </ul>
-        </section>
     </main>
 
     <footer class="site-footer">
@@ -223,24 +150,5 @@
     </footer>
     <script src="cart.js"></script>
     <script src="site-nav.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        if (typeof PrinceCart === "undefined") return;
-        var btn = document.getElementById("addAalaRegBtn");
-        if (!btn) return;
-
-        btn.addEventListener("click", function () {
-            PrinceCart.add({
-                id: "aala-2026-registration",
-                title: "AALA 2026 Conference Registration (online payment)",
-                note: "Register on AALA first, then pay on Prince Education checkout.",
-                priceNote: "Fees shown on this page"
-            });
-            updateCartBadge();
-            btn.textContent = "Added to cart";
-            btn.disabled = true;
-        });
-    });
-    </script>
 </body>
 </html>

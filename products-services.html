@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Prince Education products and services - language training, corporate programmes, and partner collaborations.">
-    <title>Products &amp; Services | Prince Education</title>
+    <meta name="description" content="港澳中研國際教育研究院有限公司 products and services.">
+    <title>Products &amp; Services | 港澳中研國際教育研究院有限公司</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -12,8 +12,8 @@
     <header class="site-header">
         <div class="header-inner">
             <a href="index.html" class="logo-link">
-                <img src="assets/logo.svg" alt="Prince Education logo">
-                <span class="logo-text">Prince Education<span class="logo-tagline">Every student matters. Every moment counts.</span></span>
+                <img src="assets/logo.svg" alt="港澳中研國際教育研究院有限公司 logo">
+                <span class="logo-text">港澳中研國際教育研究院有限公司<span class="logo-tagline">Every student matters. Every moment counts.</span></span>
             </a>
             <button type="button" class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">&#9776;</button>
             <nav class="nav-links" id="navLinks">
@@ -22,22 +22,19 @@
                 <a href="team.html">Our Team</a>
                 <a href="products-services.html" class="active">Products &amp; Services</a>
                 <a href="about.html">About &amp; Contact</a>
-                <a href="cart.html" class="nav-cart" aria-label="Cart">
-                    Cart <span class="cart-badge" id="cartBadge">0</span>
-                </a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
         <h1>Products &amp; Services</h1>
-        <p class="lead">Transparent offerings for education clients and partner collaborations. Prices below are indicative; final amounts are confirmed at enrolment or on partner checkout pages.</p>
+        <p class="lead">Simple and transparent services with secure online card payment.</p>
     </section>
 
     <main class="container">
         <section class="content-block">
             <h2>Language Training &amp; Professional Development</h2>
-            <p>Prince Education provides paid educational services including:</p>
+            <p>港澳中研國際教育研究院有限公司 provides paid educational services including:</p>
             <div class="table-scroll">
                 <table class="data-table">
                     <thead>
@@ -65,88 +62,148 @@
                         </tr>
                         <tr>
                             <td>Corporate customized training</td>
-                            <td>On-site or centre-based; syllabus tailored to employer</td>
+                            <td>On-site or online; syllabus tailored to employer</td>
                             <td>Contract-based; contact for proposal</td>
                         </tr>
                         <tr>
                             <td>Study-abroad &amp; pathway advising</td>
-                            <td>OSSD, MBA pathway, and application support</td>
+                            <td>Academic pathway and application support</td>
                             <td>Package fees; contact for details</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p>Payment for training programmes is arranged by invoice, bank transfer, or approved local payment methods as stated in your enrolment agreement. See our <a href="refund-policy.html">Refund &amp; Cancellation Policy</a>.</p>
+            <p>Payment for training programmes can be arranged by invoice, bank transfer, or online card payment via our gateway below.</p>
             <a href="about.html" class="btn btn-primary">Enquire about courses</a>
         </section>
 
-        <section class="content-block conference-box" id="aala-conference">
-            <h2>Collaborations</h2>
-            <h3>AALA 2026 International Conference (collaboration)</h3>
-            <p><strong>The 12th International Conference of the Asian Association for Language Assessment (AALA)</strong></p>
-            <ul>
-                <li><strong>Dates:</strong> 18-20 September 2026</li>
-                <li><strong>Venue:</strong> City University of Macau, Macau SAR</li>
-                <li><strong>Theme:</strong> Humanistic Approach to Assessment, Standards, Innovation, and Accountability</li>
-                <li><strong>Audience:</strong> Researchers, educators, graduate students, and assessment professionals</li>
-            </ul>
-            <p>港澳中研國際教育研究院有限公司 is a collaborator for AALA 2026.</p>
+        <section class="content-block">
+            <h2>Online payment gateway</h2>
+            <p>Enter your payment details and amount, then proceed to the secure bank payment gateway.</p>
 
-            <h3>Optional add-ons</h3>
-            <div class="table-scroll">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>MOP / HKD / CNY</th>
-                            <th>USD</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Each pre-conference workshop (18 Sep)</td>
-                            <td>600</td>
-                            <td>75</td>
-                        </tr>
-                        <tr>
-                            <td>Conference banquet (19 Sep evening)</td>
-                            <td>600</td>
-                            <td>75</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="checkout-form-row">
+                <div>
+                    <label for="payerName">Full name</label>
+                    <input id="payerName" type="text" autocomplete="name" required>
+                </div>
+                <div>
+                    <label for="payerAffiliation">Affiliation</label>
+                    <input id="payerAffiliation" type="text" required>
+                </div>
             </div>
 
-            <h3>How to register and pay</h3>
-            <ol>
-                <li>Complete your registration details on <a href="https://aalaconference.com/registration.html" target="_blank" rel="noopener noreferrer">aalaconference.com/registration.html</a>.</li>
-                <li>When you choose credit card payment, you will be directed to <strong>港澳中研國際教育研究院有限公司 checkout</strong> on this website.</li>
-            </ol>
+            <div class="checkout-form-row">
+                <div>
+                    <label for="paymentAmount">Payment amount</label>
+                    <input id="paymentAmount" type="number" min="1" step="0.01" required>
+                </div>
+                <div>
+                    <label for="paymentCurrency">Currency</label>
+                    <select id="paymentCurrency">
+                        <option value="MOP">MOP</option>
+                        <option value="HKD">HKD</option>
+                        <option value="CNY">CNY</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="checkout-form-row">
+                <div>
+                    <label for="paymentReference">Reference / note (optional)</label>
+                    <input id="paymentReference" type="text">
+                </div>
+            </div>
 
             <div class="btn-row">
-                <a href="checkout.html" class="btn btn-primary">Go to checkout</a>
-                <a href="https://aalaconference.com/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">AALA conference homepage</a>
+                <button type="button" class="btn btn-primary" id="payNowBtn">Pay via bank gateway</button>
             </div>
-
-            <p class="external-notice">
-                <strong>Note:</strong> The AALA website collects registration information only. Card payment for AALA 2026 is processed on Prince Education via the bank gateway. See our <a href="refund-policy.html#conference">Refund Policy (conference section)</a>.
-            </p>
+            <div class="config-warning" id="configWarning" style="display:none;"></div>
         </section>
-
     </main>
 
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-grid">
-                <div><h4>Prince Education</h4><p>International language training and professional development.</p></div>
+                <div><h4>港澳中研國際教育研究院有限公司</h4><p>International language training and professional development.</p></div>
                 <div><h4>Quick links</h4><ul><li><a href="about.html">About &amp; Contact</a></li><li><a href="products-services.html">Products &amp; Services</a></li></ul></div>
                 <div><h4>Legal</h4><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li><li><a href="refund-policy.html">Refund &amp; Cancellation Policy</a></li></ul></div>
-                <div><h4>Locations</h4><p>See details on the <a href="about.html">About &amp; Contact</a> page</p></div>
+                <div><h4>Address</h4><p>17/H, Finance Center, No. 230-246 Rua de Pequim, Macao Special Administrative Region of China</p></div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2014-2026 Prince Education | 港澳中研國際教育研究院有限公司. All rights reserved.</p></div>
+            <div class="footer-bottom"><p>&copy; 2014-2026 港澳中研國際教育研究院有限公司. All rights reserved.</p></div>
         </div>
     </footer>
-    <script src="cart.js"></script>
     <script src="site-nav.js"></script>
+    <script>
+    (function () {
+        var GATEWAY_URL = "https://secure.lusoibank.com/payment-gateway";
+        var MERCHANT_ID = "COMPANY_MERCHANT_ID";
+        var RETURN_URL = window.location.origin + "/payment-success.html";
+        var CANCEL_URL = window.location.origin + "/payment-cancelled.html";
+
+        var payerName = document.getElementById("payerName");
+        var payerAffiliation = document.getElementById("payerAffiliation");
+        var paymentAmount = document.getElementById("paymentAmount");
+        var paymentCurrency = document.getElementById("paymentCurrency");
+        var paymentReference = document.getElementById("paymentReference");
+        var payNowBtn = document.getElementById("payNowBtn");
+        var configWarning = document.getElementById("configWarning");
+
+        function showWarning(msg) {
+            configWarning.textContent = msg;
+            configWarning.style.display = "block";
+        }
+
+        payNowBtn.addEventListener("click", function () {
+            var name = payerName.value.trim();
+            var affiliation = payerAffiliation.value.trim();
+            var amount = Number(paymentAmount.value || 0);
+            var currency = paymentCurrency.value;
+            var reference = paymentReference.value.trim();
+
+            if (!name || !affiliation) {
+                window.alert("Please enter your full name and affiliation.");
+                return;
+            }
+            if (!amount || amount <= 0) {
+                window.alert("Please enter a valid payment amount greater than 0.");
+                return;
+            }
+            if (!MERCHANT_ID || MERCHANT_ID === "COMPANY_MERCHANT_ID") {
+                showWarning("Merchant ID is not configured yet. Set MERCHANT_ID before accepting live payments.");
+                return;
+            }
+
+            var payload = {
+                merchantId: MERCHANT_ID,
+                amount: amount.toFixed(2),
+                currency: currency,
+                orderId: "PAY-" + Date.now().toString(36).toUpperCase(),
+                returnUrl: RETURN_URL,
+                cancelUrl: CANCEL_URL,
+                payerName: name,
+                payerAffiliation: affiliation,
+                reference: reference,
+                description: "Payment via 港澳中研國際教育研究院有限公司"
+            };
+
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = GATEWAY_URL;
+            form.style.display = "none";
+
+            Object.keys(payload).forEach(function (key) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = payload[key];
+                form.appendChild(input);
+            });
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    })();
+    </script>
 </body>
 </html>

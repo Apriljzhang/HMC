@@ -73,7 +73,7 @@
                         <tr data-service-id="aala-registration" data-service-name="AALA Conference registration">
                             <td>AALA Conference registration</td>
                             <td>Conference registration payment</td>
-                            <td>See fee cards below (MOP, USD, GBP); pay in online purchase</td>
+                            <td>See fee cards below (USD, GBP); pay in online purchase</td>
                         </tr>
                     </tbody>
                 </table>
@@ -90,71 +90,9 @@
             <div class="pricing-currency-choice">
                 <label for="pricingCurrency">Currency</label>
                 <select id="pricingCurrency" aria-label="Pricing currency">
-                    <option value="MOP">MOP</option>
                     <option value="USD" selected>USD</option>
                     <option value="GBP">GBP</option>
                 </select>
-            </div>
-
-            <div class="pricing-currency-panel" data-pricing-currency="MOP" hidden>
-                <p class="footnote">Click a price line to add it to the cart.</p>
-                <div class="card-grid">
-                <div class="card">
-                    <h3>Presenter</h3>
-                    <p><strong>Non-Macau local</strong></p>
-                    <ul>
-                        <li>Early bird: 1,480</li>
-                        <li>Regular: 1,600</li>
-                        <li>Early bird bundle: 2,000</li>
-                    </ul>
-                    <p><strong>Macau local</strong></p>
-                    <ul>
-                        <li>Early bird: 1,080</li>
-                        <li>Regular: 1,200</li>
-                        <li>Early bird bundle: 1,600</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Student presenter</h3>
-                    <p><strong>Non-Macau local</strong></p>
-                    <ul>
-                        <li>Early bird: 720</li>
-                        <li>Regular: 880</li>
-                        <li>Early bird bundle: 1,240</li>
-                    </ul>
-                    <p><strong>Macau local</strong></p>
-                    <ul>
-                        <li>Early bird: 520</li>
-                        <li>Regular: 680</li>
-                        <li>Early bird bundle: 1,040</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Participant (not presenting)</h3>
-                    <p><strong>Non-Macau local</strong></p>
-                    <ul>
-                        <li>Early bird: 520</li>
-                        <li>Regular: 680</li>
-                        <li>Early bird bundle: 1,040</li>
-                    </ul>
-                    <p><strong>Macau local</strong></p>
-                    <ul>
-                        <li>Early bird: 520</li>
-                        <li>Regular: 680</li>
-                        <li>Early bird bundle: 1,040</li>
-                    </ul>
-                </div>
-                <div class="card addon-card">
-                    <h3>Optional add-ons</h3>
-                    <ul>
-                        <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 600</li>
-                        <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 600</li>
-                        <li class="price-option price-option-multiline" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research">Workshop 3 — Unpacking deep learning and neural networks:<br>Fundamentals and hands-on application in language assessment research: 600</li>
-                        <li class="price-option" data-item-type="workshop-4" data-amount="0" data-currency="MOP" data-allow-free="true" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Free</li>
-                        <li class="price-option" data-item-type="banquet" data-amount="600" data-currency="MOP" data-label="Banquet">Banquet: 600</li>
-                    </ul>
-                </div>
-            </div>
             </div>
 
             <div class="pricing-currency-panel" data-pricing-currency="USD">
@@ -346,6 +284,10 @@
         }
 
         function setPricingCurrency(currency) {
+            var supported = Array.prototype.some.call(pricingCurrency.options, function (option) {
+                return option.value === currency;
+            });
+            if (!supported) currency = "USD";
             document.querySelectorAll("#aala-pricing .pricing-currency-panel").forEach(function (panel) {
                 panel.hidden = panel.getAttribute("data-pricing-currency") !== currency;
             });
@@ -367,6 +309,12 @@
                 setPricingCurrency(next);
             });
             var cart = CompanyCart.get();
+            if (cart.length && !Array.prototype.some.call(pricingCurrency.options, function (option) {
+                return option.value === cart[0].currency;
+            })) {
+                CompanyCart.clear();
+                cart = [];
+            }
             setPricingCurrency(cart.length ? cart[0].currency : "USD");
         }
 
@@ -471,7 +419,7 @@
 
                 if (li.hasAttribute("data-amount")) {
                     amount = Number(li.getAttribute("data-amount"));
-                    currency = li.getAttribute("data-currency") || "MOP";
+                    currency = li.getAttribute("data-currency") || "USD";
                     label = li.getAttribute("data-label") || li.textContent.trim();
                 } else {
                     var match = li.textContent.match(/:\s*([\d,]+)/);

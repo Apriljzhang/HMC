@@ -315,15 +315,32 @@ a:hover {
     margin-left: -0.35rem;
 }
 
+#aala-pricing .card-grid .addon-card {
+    grid-column: 1 / -1;
+}
+
 #aala-pricing .addon-card ul {
     list-style: none;
     padding-left: 0;
+    margin: 0;
 }
 
 #aala-pricing .addon-card .price-option {
     display: block;
+    width: 100%;
     margin-bottom: 0.5rem;
     line-height: 1.45;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 720px) {
+    #aala-pricing .addon-card .price-option {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+    }
 }
 
 #aala-pricing .price-option.is-disabled {

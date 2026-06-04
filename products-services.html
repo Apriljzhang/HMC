@@ -203,16 +203,13 @@
                     </div>
                 </div>
 
-                <div class="checkout-form-row" id="submissionIdWrap" style="display: none;">
-                    <div>
+                <div class="checkout-form-row">
+                    <div id="submissionIdWrap" style="display: none;">
                         <label for="submissionId">Submission ID</label>
                         <input id="submissionId" type="text" value="AALA2026">
                         <p class="form-help">Please append three or four digits to the provided AALA2026 prefix. For multiple submissions, please include all submission IDs in this field and complete one single payment.</p>
                     </div>
-                </div>
-
-                <div class="checkout-form-row" id="dietaryRequirementsWrap" style="display: none;">
-                    <div>
+                    <div id="dietaryRequirementsWrap" style="display: none;">
                         <label for="dietaryRequirements">Dietary Requirements</label>
                         <input id="dietaryRequirements" type="text">
                         <p class="form-help">Please specify any food allergies or dietary restrictions; enter N/A if none apply.</p>
@@ -390,8 +387,8 @@
             var hasItems = cart.length > 0;
             var showRegistrationFields = hasItems && !isSponsorshipOnly(cart);
             personalInfoWrap.style.display = showRegistrationFields ? "block" : "none";
-            submissionIdWrap.style.display = showRegistrationFields && requiresSubmissionId(cart) ? "grid" : "none";
-            dietaryRequirementsWrap.style.display = showRegistrationFields && requiresDietaryRequirements(cart) ? "grid" : "none";
+            submissionIdWrap.style.display = showRegistrationFields && requiresSubmissionId(cart) ? "block" : "none";
+            dietaryRequirementsWrap.style.display = showRegistrationFields && requiresDietaryRequirements(cart) ? "block" : "none";
             emailBtn.style.display = showRegistrationFields ? "inline-flex" : "none";
             emailProofNote.style.display = showRegistrationFields ? "block" : "none";
         }

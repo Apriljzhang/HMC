@@ -86,7 +86,7 @@
             <h2>AALA Conference registration fees</h2>
             <p>Fee cards are <strong>clickable</strong>. Select a price to fill the payment amount in the online purchase section below.</p>
             <p class="footnote">Early bird bundle price includes registration and conference banquet. Macau local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders.</p>
-            <p>Participants may also register for optional pre-conference workshop and banquet add-ons in the MOP and USD sections below.</p>
+            <p>Participants may also register for optional workshops and banquet add-ons in the <strong>Optional add-ons</strong> card under MOP and USD below.</p>
 
             <h3>MOP</h3>
             <p class="footnote">Click a price line to select it.</p>
@@ -136,16 +136,14 @@
                         <li>Early bird bundle: 1,040</li>
                     </ul>
                 </div>
-                <div class="card">
-                    <h3>Pre-conference workshop (18 Sep)</h3>
+                <div class="card addon-card">
+                    <h3>Optional add-ons</h3>
                     <ul>
-                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Pre-conference workshop (18 Sep)">600</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Conference banquet (19 Sep evening)</h3>
-                    <ul>
-                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Conference banquet (19 Sep evening)">600</li>
+                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 600</li>
+                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 600</li>
+                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research">Workshop 3 — Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research: 600</li>
+                        <li class="price-option" data-amount="0" data-currency="MOP" data-allow-free="true" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Free</li>
+                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Banquet">Banquet: 600</li>
                     </ul>
                 </div>
             </div>
@@ -198,16 +196,14 @@
                         <li>Early bird bundle: 130</li>
                     </ul>
                 </div>
-                <div class="card">
-                    <h3>Pre-conference workshop (18 Sep)</h3>
+                <div class="card addon-card">
+                    <h3>Optional add-ons</h3>
                     <ul>
-                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Pre-conference workshop (18 Sep)">75</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Conference banquet (19 Sep evening)</h3>
-                    <ul>
-                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Conference banquet (19 Sep evening)">75</li>
+                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 75</li>
+                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 75</li>
+                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research">Workshop 3 — Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research: 75</li>
+                        <li class="price-option" data-amount="0" data-currency="USD" data-allow-free="true" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Free</li>
+                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Banquet">Banquet: 75</li>
                     </ul>
                 </div>
             </div>
@@ -355,10 +351,17 @@
             });
         }
 
-        function fillPurchaseAmount(amount, currency, label) {
+        function fillPurchaseAmount(amount, currency, label, allowFree) {
             purchasePrice.value = amount;
             purchaseCurrency.value = currency;
             purchasePrice.setAttribute("data-selected-label", label || "AALA Conference registration");
+            if (allowFree || amount === 0) {
+                purchasePrice.min = "0";
+                purchasePrice.setAttribute("data-allow-free", "true");
+            } else {
+                purchasePrice.min = "0.01";
+                purchasePrice.removeAttribute("data-allow-free");
+            }
             hideWarning();
             clearPriceSelection();
             var target = document.getElementById("online-purchase");
@@ -394,7 +397,8 @@
                 li.setAttribute("tabindex", "0");
 
                 function selectPrice() {
-                    fillPurchaseAmount(amount, currency, label);
+                    var allowFree = li.getAttribute("data-allow-free") === "true" || amount === 0;
+                    fillPurchaseAmount(amount, currency, label, allowFree);
                     li.classList.add("is-selected");
                 }
 
@@ -473,8 +477,13 @@
             var amount = Number(purchasePrice.value || 0);
             var currency = purchaseCurrency.value;
 
-            if (!amount || amount <= 0) {
+            var allowFree = purchasePrice.getAttribute("data-allow-free") === "true";
+            if (!allowFree && (!amount || amount <= 0)) {
                 window.alert("Please enter a valid price greater than 0.");
+                return;
+            }
+            if (allowFree && amount < 0) {
+                window.alert("Please enter a valid price.");
                 return;
             }
 
@@ -492,6 +501,8 @@
             });
 
             purchasePrice.value = "";
+            purchasePrice.removeAttribute("data-allow-free");
+            purchasePrice.min = "0.01";
             renderCart();
         });
 
@@ -505,6 +516,11 @@
                 window.alert("Your cart is empty. Add a service before paying.");
                 return;
             }
+            var total = CompanyCart.total();
+            if (total <= 0) {
+                window.alert("Your cart contains only free add-ons. No online payment is required.");
+                return;
+            }
             if (!name || !affiliation) {
                 window.alert("Please enter your full name and affiliation.");
                 return;
@@ -514,7 +530,6 @@
                 return;
             }
 
-            var total = CompanyCart.total();
             var currency = cart[0].currency;
             var description = cart.map(function (item) {
                 return item.title;

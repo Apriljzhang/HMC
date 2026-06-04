@@ -315,6 +315,17 @@ a:hover {
     margin-left: -0.35rem;
 }
 
+#aala-pricing .addon-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#aala-pricing .addon-card .price-option {
+    display: block;
+    margin-bottom: 0.5rem;
+    line-height: 1.45;
+}
+
 /* Timeline */
 .timeline {
     list-style: none;

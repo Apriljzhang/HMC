@@ -88,9 +88,18 @@
             <p class="footnote">Early bird bundle price includes registration and conference banquet. Macau local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders.</p>
             <p class="footnote"><strong>Purchase rules:</strong> Choose one conference ticket (Presenter, Student presenter, or Participant). Choose at most one of Workshop 1, 2, or 3 (same time slot). Workshop 4 may be added as well (different date). Banquet can be added only when your ticket is not an early bird bundle. Sponsorship is a separate GBP purchase.</p>
 
-            <h3>MOP</h3>
-            <p class="footnote">Click a price line to select it.</p>
-            <div class="card-grid">
+            <div class="pricing-currency-choice">
+                <label for="pricingCurrency">Currency</label>
+                <select id="pricingCurrency" aria-label="Pricing currency">
+                    <option value="MOP">MOP</option>
+                    <option value="USD" selected>USD</option>
+                    <option value="GBP">GBP</option>
+                </select>
+            </div>
+
+            <div class="pricing-currency-panel" data-pricing-currency="MOP" hidden>
+                <p class="footnote">Click a price line to select it.</p>
+                <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
                     <p><strong>Non-Macau local</strong></p>
@@ -147,10 +156,11 @@
                     </ul>
                 </div>
             </div>
+            </div>
 
-            <h3>USD</h3>
-            <p class="footnote">Click a price line to select it.</p>
-            <div class="card-grid">
+            <div class="pricing-currency-panel" data-pricing-currency="USD">
+                <p class="footnote">Click a price line to select it.</p>
+                <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
                     <p><strong>Non-Macau local</strong></p>
@@ -207,15 +217,17 @@
                     </ul>
                 </div>
             </div>
+            </div>
 
-            <h3>GBP</h3>
-            <p class="footnote">Click a price line to select it.</p>
-            <div class="card-grid">
+            <div class="pricing-currency-panel" data-pricing-currency="GBP" hidden>
+                <p class="footnote">Click a price line to select it.</p>
+                <div class="card-grid">
                 <div class="card">
                     <ul>
                         <li class="price-option" data-item-type="sponsorship" data-amount="3000" data-currency="GBP" data-label="Sponsorship">Sponsorship: 3,000</li>
                     </ul>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -239,7 +251,7 @@
                     <label for="purchaseCurrency">Currency</label>
                     <select id="purchaseCurrency">
                         <option value="MOP">MOP</option>
-                        <option value="USD">USD</option>
+                        <option value="USD" selected>USD</option>
                         <option value="GBP">GBP</option>
                     </select>
                 </div>
@@ -335,15 +347,37 @@
             purchaseService.appendChild(opt);
         }
 
+        var pricingCurrency = document.getElementById("pricingCurrency");
+
         function currencyForPricingBlock(card) {
-            var grid = card.closest(".card-grid");
-            if (!grid) return "MOP";
-            var heading = grid.previousElementSibling;
-            if (!heading || heading.tagName !== "H3") return "MOP";
-            var text = heading.textContent;
-            if (text.indexOf("USD") >= 0) return "USD";
-            if (text.indexOf("GBP") >= 0) return "GBP";
-            return "MOP";
+            var panel = card.closest("[data-pricing-currency]");
+            if (panel) return panel.getAttribute("data-pricing-currency") || "USD";
+            return "USD";
+        }
+
+        function setPricingCurrency(currency) {
+            document.querySelectorAll("#aala-pricing .pricing-currency-panel").forEach(function (panel) {
+                panel.hidden = panel.getAttribute("data-pricing-currency") !== currency;
+            });
+            if (pricingCurrency) pricingCurrency.value = currency;
+            purchaseCurrency.value = currency;
+            clearPriceSelection();
+            updateBanquetAvailability();
+        }
+
+        function initPricingCurrency() {
+            if (!pricingCurrency) return;
+            pricingCurrency.addEventListener("change", function () {
+                var next = pricingCurrency.value;
+                var cart = CompanyCart.get();
+                if (cart.length && cart[0].currency !== next) {
+                    window.alert("Remove cart items before switching pricing currency.");
+                    pricingCurrency.value = cart[0].currency;
+                    return;
+                }
+                setPricingCurrency(next);
+            });
+            setPricingCurrency("USD");
         }
 
         function clearPriceSelection() {
@@ -399,6 +433,7 @@
             purchaseCurrency.value = currency;
             purchasePrice.setAttribute("data-selected-label", label || "AALA Conference registration");
             setPurchaseMeta(itemType || "", !!isBundle);
+            if (pricingCurrency && currency) pricingCurrency.value = currency;
             if (allowFree || amount === 0) {
                 purchasePrice.min = "0";
                 purchasePrice.setAttribute("data-allow-free", "true");
@@ -703,8 +738,8 @@
         });
 
         populateServiceSelect();
+        initPricingCurrency();
         initPriceCardClicks();
-        updateBanquetAvailability();
         renderCart();
     })();
     </script>

@@ -84,7 +84,7 @@
 
         <section class="content-block">
             <h2>Online purchase</h2>
-            <p>Select a project or service from the table above, enter your price, and add it to your cart. When ready, click Pay to complete payment by credit card.</p>
+            <p>Select AALA Conference registration, enter your price, and add it to your cart. When ready, click Pay to complete payment by credit card.</p>
 
             <div class="checkout-form-row">
                 <div>
@@ -189,13 +189,12 @@
         }
 
         function populateServiceSelect() {
-            var rows = document.querySelectorAll("#servicesTable tbody tr[data-service-id]");
-            rows.forEach(function (row) {
-                var opt = document.createElement("option");
-                opt.value = row.getAttribute("data-service-id");
-                opt.textContent = row.getAttribute("data-service-name");
-                purchaseService.appendChild(opt);
-            });
+            var row = document.querySelector('#servicesTable tbody tr[data-service-id="aala-registration"]');
+            if (!row) return;
+            var opt = document.createElement("option");
+            opt.value = row.getAttribute("data-service-id");
+            opt.textContent = row.getAttribute("data-service-name");
+            purchaseService.appendChild(opt);
         }
 
         function formatMoney(amount, currency) {

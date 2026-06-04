@@ -286,7 +286,7 @@
                 <button type="button" class="btn btn-secondary" id="emailBtn">Send Registration Proof via Email</button>
                 <button type="button" class="btn btn-primary" id="payBtn">Pay</button>
             </div>
-            <p class="email-proof-note">Click the button to open your email app with an auto-generated registration message. Please attach your payment proof manually before sending. If you selected Student Presenter or Macau local, also attach valid ID documentation.</p>
+            <p class="email-proof-note" id="emailProofNote">Click the button to open your email app with an auto-generated registration message. Please attach your payment proof manually before sending. If you selected Student Presenter or Macau local, also attach valid ID documentation.</p>
             <div class="config-warning" id="configWarning" style="display:none;"></div>
         </section>
     </main>
@@ -323,6 +323,7 @@
         var dietaryRequirementsWrap = document.getElementById("dietaryRequirementsWrap");
         var dietaryRequirements = document.getElementById("dietaryRequirements");
         var emailBtn = document.getElementById("emailBtn");
+        var emailProofNote = document.getElementById("emailProofNote");
         var payBtn = document.getElementById("payBtn");
         var configWarning = document.getElementById("configWarning");
         var registrationEmailSent = false;
@@ -430,12 +431,21 @@
             });
         }
 
+        function isSponsorshipOnly(cart) {
+            return cart.length > 0 && cart.every(function (item) {
+                return item.itemType === "sponsorship";
+            });
+        }
+
         function updatePersonalInformationVisibility() {
             var cart = CompanyCart.get();
             var hasItems = cart.length > 0;
-            personalInfoWrap.style.display = hasItems ? "block" : "none";
-            submissionIdWrap.style.display = requiresSubmissionId(cart) ? "grid" : "none";
-            dietaryRequirementsWrap.style.display = requiresDietaryRequirements(cart) ? "grid" : "none";
+            var showRegistrationFields = hasItems && !isSponsorshipOnly(cart);
+            personalInfoWrap.style.display = showRegistrationFields ? "block" : "none";
+            submissionIdWrap.style.display = showRegistrationFields && requiresSubmissionId(cart) ? "grid" : "none";
+            dietaryRequirementsWrap.style.display = showRegistrationFields && requiresDietaryRequirements(cart) ? "grid" : "none";
+            emailBtn.style.display = showRegistrationFields ? "inline-flex" : "none";
+            emailProofNote.style.display = showRegistrationFields ? "block" : "none";
         }
 
         function syncPriceSelectionFromCart() {
@@ -816,15 +826,16 @@
         payBtn.addEventListener("click", function () {
             hideWarning();
             var cart = CompanyCart.get();
-            var name = payerName.value.trim();
-            var affiliation = payerAffiliation.value.trim();
+            var sponsorshipOnly = isSponsorshipOnly(cart);
+            var name = sponsorshipOnly ? "" : payerName.value.trim();
+            var affiliation = sponsorshipOnly ? "" : payerAffiliation.value.trim();
 
             if (!cart.length) {
                 window.alert("Your cart is empty. Add a service before paying.");
                 return;
             }
 
-            if (!validateCartForPayment(cart) || !validatePersonalInformation(cart)) {
+            if (!validateCartForPayment(cart)) {
                 return;
             }
 
@@ -833,11 +844,14 @@
                 window.alert("Your cart contains only free add-ons. No online payment is required.");
                 return;
             }
-            if (!name || !affiliation) {
+            if (!sponsorshipOnly && !validatePersonalInformation(cart)) {
+                return;
+            }
+            if (!sponsorshipOnly && (!name || !affiliation)) {
                 window.alert("Please enter your full name and affiliation.");
                 return;
             }
-            if (!registrationEmailSent) {
+            if (!sponsorshipOnly && !registrationEmailSent) {
                 window.alert("Please click Send Registration Proof via Email before continuing to payment.");
                 return;
             }

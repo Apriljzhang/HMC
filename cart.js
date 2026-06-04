@@ -25,9 +25,21 @@
                 title: item.title || "Item",
                 amount: Number(item.amount) || 0,
                 currency: item.currency || "MOP",
-                qty: item.qty || 1
+                qty: item.qty || 1,
+                itemType: item.itemType || "",
+                isBundle: !!item.isBundle
             });
             writeCart(cart);
+        },
+        removeByType: function (type) {
+            writeCart(readCart().filter(function (x) {
+                return x.itemType !== type;
+            }));
+        },
+        findByType: function (type) {
+            return readCart().find(function (x) {
+                return x.itemType === type;
+            });
         },
         remove: function (id) {
             writeCart(readCart().filter(function (x) {

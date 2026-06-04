@@ -326,6 +326,12 @@ a:hover {
     line-height: 1.45;
 }
 
+#aala-pricing .price-option.is-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 /* Timeline */
 .timeline {
     list-style: none;

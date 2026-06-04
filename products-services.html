@@ -84,9 +84,12 @@
 
         <section class="content-block" id="aala-pricing">
             <h2>AALA Conference registration fees</h2>
+            <p>Fee cards are <strong>clickable</strong>. Select a price to fill the payment amount in the online purchase section below.</p>
             <p class="footnote">Early bird bundle price includes registration and conference banquet. Macau local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders.</p>
+            <p>Participants may also register for optional pre-conference workshop and banquet add-ons in the MOP and USD sections below.</p>
 
-            <h3>MOP (MOP / HKD / CNY)</h3>
+            <h3>MOP</h3>
+            <p class="footnote">Click a price line to select it.</p>
             <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
@@ -133,9 +136,22 @@
                         <li>Early bird bundle: 1,040</li>
                     </ul>
                 </div>
+                <div class="card">
+                    <h3>Pre-conference workshop (18 Sep)</h3>
+                    <ul>
+                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Pre-conference workshop (18 Sep)">600</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Conference banquet (19 Sep evening)</h3>
+                    <ul>
+                        <li class="price-option" data-amount="600" data-currency="MOP" data-label="Conference banquet (19 Sep evening)">600</li>
+                    </ul>
+                </div>
             </div>
 
             <h3>USD</h3>
+            <p class="footnote">Click a price line to select it.</p>
             <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
@@ -182,22 +198,34 @@
                         <li>Early bird bundle: 130</li>
                     </ul>
                 </div>
-            </div>
-
-            <h3>GBP</h3>
-            <div class="card-grid">
-                <div class="card price-select-card" data-amount="3000" data-currency="GBP" role="button" tabindex="0" aria-label="Select Sponsorship GBP 3000">
-                    <h3>Sponsorship</h3>
-                    <p class="price-highlight">GBP 3,000</p>
-                    <p class="footnote">Click to use this amount</p>
+                <div class="card">
+                    <h3>Pre-conference workshop (18 Sep)</h3>
+                    <ul>
+                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Pre-conference workshop (18 Sep)">75</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Conference banquet (19 Sep evening)</h3>
+                    <ul>
+                        <li class="price-option" data-amount="75" data-currency="USD" data-label="Conference banquet (19 Sep evening)">75</li>
+                    </ul>
                 </div>
             </div>
-            <p class="footnote" style="margin-top: 0.75rem;">Click any price line or sponsorship card to fill the payment amount below.</p>
+
+            <h3>Others</h3>
+            <p class="footnote">Optional sponsorship. Click the card to select it.</p>
+            <div class="card-grid">
+                <div class="card price-select-card" data-amount="3000" data-currency="GBP" data-label="Sponsorship" role="button" tabindex="0" aria-label="Select Sponsorship GBP 3000">
+                    <h3>Sponsorship</h3>
+                    <p class="price-highlight">GBP 3,000</p>
+                    <p class="footnote">Clickable</p>
+                </div>
+            </div>
         </section>
 
         <section class="content-block" id="online-purchase">
             <h2>Online purchase</h2>
-            <p>Click a fee above to fill the price automatically, then add to cart and click Pay to complete payment by credit card.</p>
+            <p>Click a fee card above to fill the price automatically, then add to cart and click Pay to complete payment by credit card.</p>
 
             <div class="checkout-form-row">
                 <div>
@@ -318,7 +346,6 @@
             if (!heading || heading.tagName !== "H3") return "MOP";
             var text = heading.textContent;
             if (text.indexOf("USD") >= 0) return "USD";
-            if (text.indexOf("GBP") >= 0) return "GBP";
             return "MOP";
         }
 
@@ -340,20 +367,31 @@
 
         function initPriceCardClicks() {
             document.querySelectorAll("#aala-pricing .card ul li").forEach(function (li) {
+                var amount;
+                var currency;
+                var label;
+
+                if (li.hasAttribute("data-amount")) {
+                    amount = Number(li.getAttribute("data-amount"));
+                    currency = li.getAttribute("data-currency") || "MOP";
+                    label = li.getAttribute("data-label") || li.textContent.trim();
+                } else {
+                    var match = li.textContent.match(/:\s*([\d,]+)/);
+                    if (!match) return;
+                    amount = parseFloat(match[1].replace(/,/g, ""));
+                    var card = li.closest(".card");
+                    var category = card.querySelector("h3").textContent;
+                    var tier = li.textContent.split(":")[0].trim();
+                    var locality = "";
+                    var prev = li.parentElement.previousElementSibling;
+                    if (prev && prev.tagName === "P") locality = prev.textContent.trim() + " - ";
+                    label = category + " - " + locality + tier;
+                    currency = currencyForPricingBlock(card);
+                }
+
                 li.classList.add("price-option");
                 li.setAttribute("role", "button");
                 li.setAttribute("tabindex", "0");
-                var match = li.textContent.match(/:\s*([\d,]+)/);
-                if (!match) return;
-                var amount = parseFloat(match[1].replace(/,/g, ""));
-                var card = li.closest(".card");
-                var category = card.querySelector("h3").textContent;
-                var tier = li.textContent.split(":")[0].trim();
-                var locality = "";
-                var prev = li.parentElement.previousElementSibling;
-                if (prev && prev.tagName === "P") locality = prev.textContent.trim() + " - ";
-                var label = category + " - " + locality + tier;
-                var currency = currencyForPricingBlock(card);
 
                 function selectPrice() {
                     fillPurchaseAmount(amount, currency, label);
@@ -372,7 +410,7 @@
             document.querySelectorAll("#aala-pricing .price-select-card").forEach(function (card) {
                 var amount = Number(card.getAttribute("data-amount"));
                 var currency = card.getAttribute("data-currency") || "GBP";
-                var label = card.querySelector("h3").textContent;
+                var label = card.getAttribute("data-label") || card.querySelector("h3").textContent;
 
                 function selectCard() {
                     fillPurchaseAmount(amount, currency, label);

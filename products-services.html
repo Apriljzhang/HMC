@@ -186,16 +186,18 @@
 
             <h3>GBP</h3>
             <div class="card-grid">
-                <div class="card">
+                <div class="card price-select-card" data-amount="3000" data-currency="GBP" role="button" tabindex="0" aria-label="Select Sponsorship GBP 3000">
                     <h3>Sponsorship</h3>
                     <p class="price-highlight">GBP 3,000</p>
+                    <p class="footnote">Click to use this amount</p>
                 </div>
             </div>
+            <p class="footnote" style="margin-top: 0.75rem;">Click any price line or sponsorship card to fill the payment amount below.</p>
         </section>
 
-        <section class="content-block">
+        <section class="content-block" id="online-purchase">
             <h2>Online purchase</h2>
-            <p>Select AALA Conference registration, enter your price, and add it to your cart. When ready, click Pay to complete payment by credit card.</p>
+            <p>Click a fee above to fill the price automatically, then add to cart and click Pay to complete payment by credit card.</p>
 
             <div class="checkout-form-row">
                 <div>
@@ -309,6 +311,84 @@
             purchaseService.appendChild(opt);
         }
 
+        function currencyForPricingBlock(card) {
+            var grid = card.closest(".card-grid");
+            if (!grid) return "MOP";
+            var heading = grid.previousElementSibling;
+            if (!heading || heading.tagName !== "H3") return "MOP";
+            var text = heading.textContent;
+            if (text.indexOf("USD") >= 0) return "USD";
+            if (text.indexOf("GBP") >= 0) return "GBP";
+            return "MOP";
+        }
+
+        function clearPriceSelection() {
+            document.querySelectorAll("#aala-pricing .is-selected").forEach(function (el) {
+                el.classList.remove("is-selected");
+            });
+        }
+
+        function fillPurchaseAmount(amount, currency, label) {
+            purchasePrice.value = amount;
+            purchaseCurrency.value = currency;
+            purchasePrice.setAttribute("data-selected-label", label || "AALA Conference registration");
+            hideWarning();
+            clearPriceSelection();
+            var target = document.getElementById("online-purchase");
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function initPriceCardClicks() {
+            document.querySelectorAll("#aala-pricing .card ul li").forEach(function (li) {
+                li.classList.add("price-option");
+                li.setAttribute("role", "button");
+                li.setAttribute("tabindex", "0");
+                var match = li.textContent.match(/:\s*([\d,]+)/);
+                if (!match) return;
+                var amount = parseFloat(match[1].replace(/,/g, ""));
+                var card = li.closest(".card");
+                var category = card.querySelector("h3").textContent;
+                var tier = li.textContent.split(":")[0].trim();
+                var locality = "";
+                var prev = li.parentElement.previousElementSibling;
+                if (prev && prev.tagName === "P") locality = prev.textContent.trim() + " - ";
+                var label = category + " - " + locality + tier;
+                var currency = currencyForPricingBlock(card);
+
+                function selectPrice() {
+                    fillPurchaseAmount(amount, currency, label);
+                    li.classList.add("is-selected");
+                }
+
+                li.addEventListener("click", selectPrice);
+                li.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        selectPrice();
+                    }
+                });
+            });
+
+            document.querySelectorAll("#aala-pricing .price-select-card").forEach(function (card) {
+                var amount = Number(card.getAttribute("data-amount"));
+                var currency = card.getAttribute("data-currency") || "GBP";
+                var label = card.querySelector("h3").textContent;
+
+                function selectCard() {
+                    fillPurchaseAmount(amount, currency, label);
+                    card.classList.add("is-selected");
+                }
+
+                card.addEventListener("click", selectCard);
+                card.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        selectCard();
+                    }
+                });
+            });
+        }
+
         function formatMoney(amount, currency) {
             return currency + " " + Number(amount).toFixed(2);
         }
@@ -350,7 +430,8 @@
         addToCartBtn.addEventListener("click", function () {
             hideWarning();
             var serviceId = purchaseService.value;
-            var serviceName = purchaseService.options[purchaseService.selectedIndex].textContent;
+            var serviceName = purchasePrice.getAttribute("data-selected-label") ||
+                purchaseService.options[purchaseService.selectedIndex].textContent;
             var amount = Number(purchasePrice.value || 0);
             var currency = purchaseCurrency.value;
 
@@ -431,6 +512,7 @@
         });
 
         populateServiceSelect();
+        initPriceCardClicks();
         renderCart();
     })();
     </script>

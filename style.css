@@ -287,6 +287,34 @@ a:hover {
     padding-left: 1.1rem;
 }
 
+#aala-pricing .price-option,
+#aala-pricing .price-select-card {
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#aala-pricing .price-option:hover,
+#aala-pricing .price-select-card:hover {
+    background: #f0f7f8;
+}
+
+#aala-pricing .price-option.is-selected,
+#aala-pricing .price-select-card.is-selected {
+    background: #e8f4f5;
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+}
+
+#aala-pricing .price-select-card.is-selected {
+    border-color: var(--teal);
+}
+
+#aala-pricing .price-option {
+    border-radius: 4px;
+    padding: 0.2rem 0.35rem;
+    margin-left: -0.35rem;
+}
+
 /* Timeline */
 .timeline {
     list-style: none;

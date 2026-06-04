@@ -86,7 +86,6 @@
             <h2>AALA Conference registration fees</h2>
             <p>Fee cards are <strong>clickable</strong>. Select a price to fill the payment amount in the online purchase section below.</p>
             <p class="footnote">Early bird bundle price includes registration and conference banquet. Macau local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders.</p>
-            <p class="footnote"><strong>Purchase rules:</strong> Choose one conference ticket (Presenter, Student presenter, or Participant). Choose at most one of Workshop 1, 2, or 3 (same time slot). Workshop 4 may be added as well (different date). Banquet can be added only when your ticket is not an early bird bundle. Sponsorship is a separate GBP purchase.</p>
 
             <div class="pricing-currency-choice">
                 <label for="pricingCurrency">Currency</label>
@@ -372,12 +371,13 @@
                 var cart = CompanyCart.get();
                 if (cart.length && cart[0].currency !== next) {
                     window.alert("Remove cart items before switching pricing currency.");
-                    pricingCurrency.value = cart[0].currency;
+                    setPricingCurrency(cart[0].currency);
                     return;
                 }
                 setPricingCurrency(next);
             });
-            setPricingCurrency("USD");
+            var cart = CompanyCart.get();
+            setPricingCurrency(cart.length ? cart[0].currency : "USD");
         }
 
         function clearPriceSelection() {
@@ -430,10 +430,9 @@
 
         function fillPurchaseAmount(amount, currency, label, allowFree, itemType, isBundle) {
             purchasePrice.value = amount;
-            purchaseCurrency.value = currency;
             purchasePrice.setAttribute("data-selected-label", label || "AALA Conference registration");
             setPurchaseMeta(itemType || "", !!isBundle);
-            if (pricingCurrency && currency) pricingCurrency.value = currency;
+            if (currency) setPricingCurrency(currency);
             if (allowFree || amount === 0) {
                 purchasePrice.min = "0";
                 purchasePrice.setAttribute("data-allow-free", "true");

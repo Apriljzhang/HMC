@@ -737,7 +737,8 @@
 
             cart.forEach(function (item) {
                 if (item.itemType !== "registration") {
-                    lines.push("- " + item.title);
+                    var workshopMatch = item.title.match(/Workshop\s+\d/i);
+                    lines.push("- " + (workshopMatch ? workshopMatch[0] : item.title));
                 }
             });
 

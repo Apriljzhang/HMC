@@ -269,6 +269,24 @@ a:hover {
     font-size: 1.1rem;
 }
 
+.card .price-highlight {
+    margin: 0.5rem 0 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--teal);
+}
+
+#aala-pricing h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--navy);
+}
+
+#aala-pricing .card ul {
+    margin: 0.25rem 0 0.75rem;
+    padding-left: 1.1rem;
+}
+
 /* Timeline */
 .timeline {
     list-style: none;

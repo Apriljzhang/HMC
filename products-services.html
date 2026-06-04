@@ -84,7 +84,7 @@
 
         <section class="content-block" id="aala-pricing">
             <h2>AALA Conference registration fees</h2>
-            <p>Fee cards are <strong>clickable</strong>. Select a price to fill the payment amount in the online purchase section below.</p>
+            <p>Fee cards are <strong>clickable</strong>. Select a price line to add it directly to the cart below.</p>
             <p class="footnote">Early bird bundle price includes registration and conference banquet. Macau local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders.</p>
 
             <div class="pricing-currency-choice">
@@ -97,7 +97,7 @@
             </div>
 
             <div class="pricing-currency-panel" data-pricing-currency="MOP" hidden>
-                <p class="footnote">Click a price line to select it.</p>
+                <p class="footnote">Click a price line to add it to the cart.</p>
                 <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
@@ -158,7 +158,7 @@
             </div>
 
             <div class="pricing-currency-panel" data-pricing-currency="USD">
-                <p class="footnote">Click a price line to select it.</p>
+                <p class="footnote">Click a price line to add it to the cart.</p>
                 <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
@@ -219,7 +219,7 @@
             </div>
 
             <div class="pricing-currency-panel" data-pricing-currency="GBP" hidden>
-                <p class="footnote">Click a price line to select it.</p>
+                <p class="footnote">Click a price line to add it to the cart.</p>
                 <div class="card-grid">
                 <div class="card">
                     <ul>
@@ -232,34 +232,7 @@
 
         <section class="content-block" id="online-purchase">
             <h2>Online purchase</h2>
-            <p>Click a fee card above to fill the price automatically, then add to cart and click Pay to complete payment by credit card.</p>
-
-            <div class="checkout-form-row">
-                <div>
-                    <label for="purchaseService">Project / service</label>
-                    <select id="purchaseService"></select>
-                </div>
-                <div>
-                    <label for="purchasePrice">Price</label>
-                    <input id="purchasePrice" type="number" min="0.01" step="0.01" placeholder="0.00">
-                </div>
-            </div>
-
-            <div class="checkout-form-row">
-                <div>
-                    <label for="purchaseCurrency">Currency</label>
-                    <select id="purchaseCurrency">
-                        <option value="MOP">MOP</option>
-                        <option value="USD" selected>USD</option>
-                        <option value="GBP">GBP</option>
-                    </select>
-                </div>
-                <div style="display: flex; align-items: flex-end;">
-                    <button type="button" class="btn btn-secondary" id="addToCartBtn">Add to cart</button>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 1.25rem;">Your cart</h3>
+            <h3 style="margin-top: 1.25rem;">Cart</h3>
             <div id="cartEmpty" class="footnote">Your cart is empty.</div>
             <div id="cartListWrap" style="display: none;">
                 <div class="table-scroll">
@@ -277,20 +250,43 @@
                 <p style="margin-top: 0.75rem;"><strong>Total:</strong> <span id="cartTotal">0</span></p>
             </div>
 
-            <div class="checkout-form-row" style="margin-top: 1.25rem;">
-                <div>
-                    <label for="payerName">Full name</label>
-                    <input id="payerName" type="text" autocomplete="name" required>
+            <div id="personalInfoWrap" class="personal-info" style="display: none;">
+                <h3>Personal Information</h3>
+                <div class="checkout-form-row">
+                    <div>
+                        <label for="payerName">Full Name</label>
+                        <input id="payerName" type="text" autocomplete="name" required>
+                        <p class="form-help">Please use exactly the same name for registration and payment, and avoid non-alphabet characters.</p>
+                    </div>
+                    <div>
+                        <label for="payerAffiliation">Affiliation</label>
+                        <input id="payerAffiliation" type="text" required>
+                        <p class="form-help">Please provide only your institution; faculty or department information is not required.</p>
+                    </div>
                 </div>
-                <div>
-                    <label for="payerAffiliation">Affiliation</label>
-                    <input id="payerAffiliation" type="text" required>
+
+                <div class="checkout-form-row" id="submissionIdWrap" style="display: none;">
+                    <div>
+                        <label for="submissionId">Submission ID</label>
+                        <input id="submissionId" type="text" value="AALA2026">
+                        <p class="form-help">Please append three or four digits to the provided AALA2026 prefix. For multiple submissions, please include all submission IDs in this field and complete one single payment.</p>
+                    </div>
+                </div>
+
+                <div class="checkout-form-row" id="dietaryRequirementsWrap" style="display: none;">
+                    <div>
+                        <label for="dietaryRequirements">Dietary Requirements</label>
+                        <input id="dietaryRequirements" type="text">
+                        <p class="form-help">Please specify any food allergies or dietary restrictions; enter N/A if none apply.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="btn-row">
+                <button type="button" class="btn btn-secondary" id="emailBtn">Send Registration Proof via Email</button>
                 <button type="button" class="btn btn-primary" id="payBtn">Pay</button>
             </div>
+            <p class="email-proof-note">Click the button to open your email app with an auto-generated registration message. Please attach your payment proof manually before sending. If you selected Student Presenter or Macau local, also attach valid ID documentation.</p>
             <div class="config-warning" id="configWarning" style="display:none;"></div>
         </section>
     </main>
@@ -315,18 +311,21 @@
         var RETURN_URL = window.location.origin + "/payment-success.html";
         var CANCEL_URL = window.location.origin + "/payment-cancelled.html";
 
-        var purchaseService = document.getElementById("purchaseService");
-        var purchasePrice = document.getElementById("purchasePrice");
-        var purchaseCurrency = document.getElementById("purchaseCurrency");
-        var addToCartBtn = document.getElementById("addToCartBtn");
         var cartEmpty = document.getElementById("cartEmpty");
         var cartListWrap = document.getElementById("cartListWrap");
         var cartList = document.getElementById("cartList");
         var cartTotal = document.getElementById("cartTotal");
+        var personalInfoWrap = document.getElementById("personalInfoWrap");
         var payerName = document.getElementById("payerName");
         var payerAffiliation = document.getElementById("payerAffiliation");
+        var submissionIdWrap = document.getElementById("submissionIdWrap");
+        var submissionId = document.getElementById("submissionId");
+        var dietaryRequirementsWrap = document.getElementById("dietaryRequirementsWrap");
+        var dietaryRequirements = document.getElementById("dietaryRequirements");
+        var emailBtn = document.getElementById("emailBtn");
         var payBtn = document.getElementById("payBtn");
         var configWarning = document.getElementById("configWarning");
+        var registrationEmailSent = false;
 
         function showWarning(msg) {
             configWarning.textContent = msg;
@@ -335,15 +334,6 @@
 
         function hideWarning() {
             configWarning.style.display = "none";
-        }
-
-        function populateServiceSelect() {
-            var row = document.querySelector('#servicesTable tbody tr[data-service-id="aala-registration"]');
-            if (!row) return;
-            var opt = document.createElement("option");
-            opt.value = row.getAttribute("data-service-id");
-            opt.textContent = row.getAttribute("data-service-name");
-            purchaseService.appendChild(opt);
         }
 
         var pricingCurrency = document.getElementById("pricingCurrency");
@@ -359,7 +349,6 @@
                 panel.hidden = panel.getAttribute("data-pricing-currency") !== currency;
             });
             if (pricingCurrency) pricingCurrency.value = currency;
-            purchaseCurrency.value = currency;
             clearPriceSelection();
             updateBanquetAvailability();
         }
@@ -415,35 +404,51 @@
             });
         }
 
-        function setPurchaseMeta(itemType, isBundle) {
-            if (itemType) {
-                purchasePrice.setAttribute("data-item-type", itemType);
-            } else {
-                purchasePrice.removeAttribute("data-item-type");
-            }
-            if (isBundle) {
-                purchasePrice.setAttribute("data-is-bundle", "true");
-            } else {
-                purchasePrice.removeAttribute("data-is-bundle");
-            }
+        function resetEmailGate() {
+            registrationEmailSent = false;
         }
 
-        function fillPurchaseAmount(amount, currency, label, allowFree, itemType, isBundle) {
-            purchasePrice.value = amount;
-            purchasePrice.setAttribute("data-selected-label", label || "AALA Conference registration");
-            setPurchaseMeta(itemType || "", !!isBundle);
-            if (currency) setPricingCurrency(currency);
-            if (allowFree || amount === 0) {
-                purchasePrice.min = "0";
-                purchasePrice.setAttribute("data-allow-free", "true");
-            } else {
-                purchasePrice.min = "0.01";
-                purchasePrice.removeAttribute("data-allow-free");
-            }
-            hideWarning();
+        [payerName, payerAffiliation, submissionId, dietaryRequirements].forEach(function (input) {
+            input.addEventListener("input", resetEmailGate);
+        });
+
+        function requiresSubmissionId(cart) {
+            return cart.some(function (item) {
+                return item.itemType === "registration" && /presenter/i.test(item.title) && !/participant/i.test(item.title);
+            });
+        }
+
+        function requiresIdDocument(cart) {
+            return cart.some(function (item) {
+                return /student presenter/i.test(item.title) || /(^| - )Macau local( - |$)/i.test(item.title);
+            });
+        }
+
+        function requiresDietaryRequirements(cart) {
+            return cartHasBundleRegistration(cart) || cart.some(function (item) {
+                return item.itemType === "banquet";
+            });
+        }
+
+        function updatePersonalInformationVisibility() {
+            var cart = CompanyCart.get();
+            var hasItems = cart.length > 0;
+            personalInfoWrap.style.display = hasItems ? "block" : "none";
+            submissionIdWrap.style.display = requiresSubmissionId(cart) ? "grid" : "none";
+            dietaryRequirementsWrap.style.display = requiresDietaryRequirements(cart) ? "grid" : "none";
+        }
+
+        function syncPriceSelectionFromCart() {
+            var cart = CompanyCart.get();
             clearPriceSelection();
-            var target = document.getElementById("online-purchase");
-            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            document.querySelectorAll("#aala-pricing .price-option").forEach(function (li) {
+                var label = li.getAttribute("data-label");
+                var currency = li.getAttribute("data-currency") || currencyForPricingBlock(li.closest(".card"));
+                var selected = cart.some(function (item) {
+                    return item.title === label && item.currency === currency;
+                });
+                if (selected) li.classList.add("is-selected");
+            });
         }
 
         function initPriceCardClicks() {
@@ -470,6 +475,8 @@
                     if (prev && prev.tagName === "P") locality = prev.textContent.trim() + " - ";
                     label = category + " - " + locality + tier;
                     currency = currencyForPricingBlock(card);
+                    li.setAttribute("data-label", label);
+                    li.setAttribute("data-currency", currency);
                     if (!card.classList.contains("addon-card")) {
                         itemType = "registration";
                         isBundle = tier.toLowerCase().indexOf("bundle") >= 0;
@@ -488,8 +495,14 @@
                         return;
                     }
                     var allowFree = li.getAttribute("data-allow-free") === "true" || amount === 0;
-                    fillPurchaseAmount(amount, currency, label, allowFree, itemType, isBundle);
-                    li.classList.add("is-selected");
+                    addSelectedItemToCart({
+                        title: label,
+                        amount: amount,
+                        currency: currency,
+                        itemType: itemType,
+                        isBundle: isBundle,
+                        allowFree: allowFree
+                    });
                 }
 
                 li.addEventListener("click", selectPrice);
@@ -509,8 +522,14 @@
                 function selectCard() {
                     var itemType = card.getAttribute("data-item-type") || "";
                     var isBundle = card.getAttribute("data-is-bundle") === "true";
-                    fillPurchaseAmount(amount, currency, label, false, itemType, isBundle);
-                    card.classList.add("is-selected");
+                    addSelectedItemToCart({
+                        title: label,
+                        amount: amount,
+                        currency: currency,
+                        itemType: itemType,
+                        isBundle: isBundle,
+                        allowFree: false
+                    });
                 }
 
                 card.addEventListener("click", selectCard);
@@ -535,6 +554,9 @@
                 cartEmpty.style.display = "block";
                 cartListWrap.style.display = "none";
                 cartTotal.textContent = "0";
+                updatePersonalInformationVisibility();
+                syncPriceSelectionFromCart();
+                updateBanquetAvailability();
                 return;
             }
 
@@ -556,10 +578,13 @@
             cartList.querySelectorAll("[data-remove]").forEach(function (btn) {
                 btn.addEventListener("click", function () {
                     CompanyCart.remove(btn.getAttribute("data-remove"));
+                    resetEmailGate();
                     renderCart();
                 });
             });
 
+            updatePersonalInformationVisibility();
+            syncPriceSelectionFromCart();
             updateBanquetAvailability();
         }
 
@@ -601,17 +626,14 @@
             return true;
         }
 
-        addToCartBtn.addEventListener("click", function () {
+        function addSelectedItemToCart(selection) {
             hideWarning();
-            var serviceId = purchaseService.value;
-            var serviceName = purchasePrice.getAttribute("data-selected-label") ||
-                purchaseService.options[purchaseService.selectedIndex].textContent;
-            var amount = Number(purchasePrice.value || 0);
-            var currency = purchaseCurrency.value;
-            var itemType = purchasePrice.getAttribute("data-item-type") || "";
-            var isBundle = purchasePrice.getAttribute("data-is-bundle") === "true";
+            var amount = Number(selection.amount || 0);
+            var currency = selection.currency || "USD";
+            var itemType = selection.itemType || "";
+            var isBundle = !!selection.isBundle;
+            var allowFree = !!selection.allowFree;
 
-            var allowFree = purchasePrice.getAttribute("data-allow-free") === "true";
             if (!allowFree && (!amount || amount <= 0)) {
                 window.alert("Please enter a valid price greater than 0.");
                 return;
@@ -643,21 +665,152 @@
             }
 
             CompanyCart.add({
-                id: serviceId + "-" + Date.now(),
-                title: serviceName,
+                id: "aala-registration-" + Date.now(),
+                title: selection.title,
                 amount: amount,
                 currency: currency,
                 itemType: itemType,
                 isBundle: isBundle
             });
 
-            purchasePrice.value = "";
-            purchasePrice.removeAttribute("data-allow-free");
-            purchasePrice.removeAttribute("data-item-type");
-            purchasePrice.removeAttribute("data-is-bundle");
-            purchasePrice.min = "0.01";
+            resetEmailGate();
+            setPricingCurrency(currency);
             renderCart();
-        });
+            var target = document.getElementById("online-purchase");
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function validatePersonalInformation(cart) {
+            var name = payerName.value.trim();
+            var affiliation = payerAffiliation.value.trim();
+            var needsSubmission = requiresSubmissionId(cart);
+            var submission = submissionId.value.trim();
+            var needsDietary = requiresDietaryRequirements(cart);
+            var dietary = dietaryRequirements.value.trim();
+
+            if (!name) {
+                window.alert("Please enter your full name.");
+                return false;
+            }
+            if (!/^[A-Za-z .'-]+$/.test(name)) {
+                window.alert("Please use alphabet characters only for your full name.");
+                return false;
+            }
+            if (!affiliation) {
+                window.alert("Please enter your affiliation.");
+                return false;
+            }
+            if (needsSubmission && !/AALA2026\d{3,4}/.test(submission)) {
+                window.alert("Please append three or four digits to AALA2026 in the Submission ID field.");
+                return false;
+            }
+            if (needsDietary && !dietary) {
+                window.alert("Please enter dietary requirements, or enter N/A if none apply.");
+                return false;
+            }
+            return true;
+        }
+
+        function cartSummary(cart) {
+            return cart.map(function (item) {
+                return "- " + item.title + " (" + formatMoney(item.amount, item.currency) + ")";
+            }).join("\n");
+        }
+
+        function titleCase(value) {
+            return value.replace(/\b\w/g, function (letter) {
+                return letter.toUpperCase();
+            });
+        }
+
+        function registrationPaymentLines(cart) {
+            var lines = [];
+            var registration = cart.find(function (item) {
+                return item.itemType === "registration";
+            });
+
+            if (registration) {
+                registration.title.split(" - ").forEach(function (part) {
+                    lines.push("- " + titleCase(part.trim()));
+                });
+            }
+
+            cart.forEach(function (item) {
+                if (item.itemType !== "registration") {
+                    lines.push("- " + item.title);
+                }
+            });
+
+            return lines.join("\n");
+        }
+
+        function primarySubmissionId() {
+            var match = submissionId.value.trim().match(/AALA2026\d{3,4}/);
+            return match ? match[0] : "";
+        }
+
+        function openRegistrationEmail() {
+            hideWarning();
+            var cart = CompanyCart.get();
+            if (!cart.length) {
+                window.alert("Your cart is empty. Select registration items before sending email.");
+                return;
+            }
+            if (!validateCartForPayment(cart) || !validatePersonalInformation(cart)) {
+                return;
+            }
+
+            var name = payerName.value.trim();
+            var affiliation = payerAffiliation.value.trim();
+            var currency = cart[0].currency;
+            var total = formatMoney(CompanyCart.total(), currency).replace(".00", "");
+            var submission = requiresSubmissionId(cart) ? primarySubmissionId() : "";
+            var submissionLine = submission ? "\nSubmission ID: " + submission : "";
+            var dietaryLine = requiresDietaryRequirements(cart)
+                ? dietaryRequirements.value.trim()
+                : "N/A";
+            var idDocumentLine = requiresIdDocument(cart)
+                ? "\nPlease also attach student/Macau ID documentation as an email attachment."
+                : "";
+
+            var subject = "Registration - " + (submission || "AALA2026");
+            var body = "Dear AALA 2026 Organizing Team,\n\n"
+                + "Name: " + name + "\n"
+                + "Affiliation: " + affiliation
+                + submissionLine + "\n"
+                + "Payment type:\n" + registrationPaymentLines(cart) + "\n"
+                + "Payment amount: " + total + "\n"
+                + "Dietary requirements: " + dietaryLine + "\n\n"
+                + "Please attach payment proof as an email attachment."
+                + idDocumentLine + "\n\n"
+                + "Best regards,\n" + name;
+
+            registrationEmailSent = true;
+            showWarning("Registration email message opened. Please attach your payment proof manually before sending, then continue to payment.");
+            window.location.href = "mailto:aala2026@outlook.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        }
+
+        function validateCartForPayment(cart) {
+            var hasSponsorship = cart.some(function (item) { return item.itemType === "sponsorship"; });
+            var hasRegistration = cart.some(function (item) { return item.itemType === "registration"; });
+            if (!hasSponsorship && !hasRegistration) {
+                window.alert("Please add a conference registration ticket or sponsorship before paying.");
+                return false;
+            }
+
+            var parallelCount = cart.filter(function (item) { return item.itemType === "workshop-parallel"; }).length;
+            if (parallelCount > 1) {
+                window.alert("You may only select one of Workshop 1, 2, or 3 per order.");
+                return false;
+            }
+
+            if (cartHasBundleRegistration(cart) && cart.some(function (item) { return item.itemType === "banquet"; })) {
+                window.alert("Banquet cannot be added when your ticket is an early bird bundle.");
+                return false;
+            }
+
+            return true;
+        }
 
         payBtn.addEventListener("click", function () {
             hideWarning();
@@ -670,21 +823,7 @@
                 return;
             }
 
-            var hasSponsorship = cart.some(function (item) { return item.itemType === "sponsorship"; });
-            var hasRegistration = cart.some(function (item) { return item.itemType === "registration"; });
-            if (!hasSponsorship && !hasRegistration) {
-                window.alert("Please add a conference registration ticket or sponsorship before paying.");
-                return;
-            }
-
-            var parallelCount = cart.filter(function (item) { return item.itemType === "workshop-parallel"; }).length;
-            if (parallelCount > 1) {
-                window.alert("You may only select one of Workshop 1, 2, or 3 per order.");
-                return;
-            }
-
-            if (cartHasBundleRegistration(cart) && cart.some(function (item) { return item.itemType === "banquet"; })) {
-                window.alert("Banquet cannot be added when your ticket is an early bird bundle.");
+            if (!validateCartForPayment(cart) || !validatePersonalInformation(cart)) {
                 return;
             }
 
@@ -695,6 +834,10 @@
             }
             if (!name || !affiliation) {
                 window.alert("Please enter your full name and affiliation.");
+                return;
+            }
+            if (!registrationEmailSent) {
+                window.alert("Please click Send Registration Proof via Email before continuing to payment.");
                 return;
             }
             if (!MERCHANT_ID || MERCHANT_ID === "COMPANY_MERCHANT_ID") {
@@ -716,6 +859,8 @@
                 cancelUrl: CANCEL_URL,
                 payerName: name,
                 payerAffiliation: affiliation,
+                submissionId: requiresSubmissionId(cart) ? submissionId.value.trim() : "",
+                dietaryRequirements: requiresDietaryRequirements(cart) ? dietaryRequirements.value.trim() : "N/A",
                 description: description
             };
 
@@ -736,7 +881,8 @@
             form.submit();
         });
 
-        populateServiceSelect();
+        emailBtn.addEventListener("click", openRegistrationEmail);
+
         initPricingCurrency();
         initPriceCardClicks();
         renderCart();

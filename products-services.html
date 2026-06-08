@@ -73,7 +73,7 @@
                         <tr data-service-id="aala-registration" data-service-name="AALA Conference registration">
                             <td>AALA Conference registration</td>
                             <td>Conference registration payment</td>
-                            <td>See fee cards below (USD, GBP); pay in online purchase</td>
+                            <td>See fee cards below (MOP, GBP); pay in online purchase</td>
                         </tr>
                     </tbody>
                 </table>
@@ -90,60 +90,60 @@
             <div class="pricing-currency-choice">
                 <label for="pricingCurrency">Currency</label>
                 <select id="pricingCurrency" aria-label="Pricing currency">
-                    <option value="USD" selected>USD</option>
+                    <option value="MOP" selected>MOP</option>
                     <option value="GBP">GBP</option>
                 </select>
             </div>
 
-            <div class="pricing-currency-panel" data-pricing-currency="USD">
-                <p class="footnote">Click a price line to add it to the cart.</p>
+            <div class="pricing-currency-panel" data-pricing-currency="MOP">
+                <p class="footnote">Click a price line to add it to the cart. All prices are in MOP.</p>
                 <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
                     <p><strong>Non-Macau local</strong></p>
                     <ul>
-                        <li>Early bird: 185</li>
-                        <li>Regular: 200</li>
-                        <li>Early bird bundle: 250</li>
+                        <li>Early bird: 1480</li>
+                        <li>Regular: 1600</li>
+                        <li>Early bird bundle: 2000</li>
                     </ul>
                     <p><strong>Macau local</strong></p>
                     <ul>
-                        <li>Early bird: 135</li>
-                        <li>Regular: 150</li>
-                        <li>Early bird bundle: 200</li>
+                        <li>Early bird: 1080</li>
+                        <li>Regular: 1200</li>
+                        <li>Early bird bundle: 1600</li>
                     </ul>
                 </div>
                 <div class="card">
                     <h3>Student presenter</h3>
                     <p><strong>Non-Macau local</strong></p>
                     <ul>
-                        <li>Early bird: 90</li>
-                        <li>Regular: 110</li>
-                        <li>Early bird bundle: 155</li>
+                        <li>Early bird: 720</li>
+                        <li>Regular: 880</li>
+                        <li>Early bird bundle: 1240</li>
                     </ul>
                     <p><strong>Macau local</strong></p>
                     <ul>
-                        <li>Early bird: 65</li>
-                        <li>Regular: 85</li>
-                        <li>Early bird bundle: 130</li>
+                        <li>Early bird: 520</li>
+                        <li>Regular: 680</li>
+                        <li>Early bird bundle: 1040</li>
                     </ul>
                 </div>
                 <div class="card">
                     <h3>Participant (not presenting)</h3>
                     <ul>
-                        <li>Early bird: 65</li>
-                        <li>Regular: 85</li>
-                        <li>Early bird bundle: 130</li>
+                        <li>Early bird: 520</li>
+                        <li>Regular: 680</li>
+                        <li>Early bird bundle: 1040</li>
                     </ul>
                 </div>
                 <div class="card addon-card">
                     <h3>Optional add-ons</h3>
                     <ul>
-                        <li class="price-option" data-item-type="workshop-parallel" data-amount="75" data-currency="USD" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 75</li>
-                        <li class="price-option" data-item-type="workshop-parallel" data-amount="75" data-currency="USD" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 75</li>
-                        <li class="price-option price-option-multiline" data-item-type="workshop-parallel" data-amount="75" data-currency="USD" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research">Workshop 3 — Unpacking deep learning and neural networks:<br>Fundamentals and hands-on application in language assessment research: 75</li>
-                        <li class="price-option" data-item-type="workshop-4" data-amount="0" data-currency="USD" data-allow-free="true" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Free</li>
-                        <li class="price-option" data-item-type="banquet" data-amount="75" data-currency="USD" data-label="Banquet">Banquet: 75</li>
+                        <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 600</li>
+                        <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 600</li>
+                        <li class="price-option price-option-multiline" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research">Workshop 3 — Unpacking deep learning and neural networks:<br>Fundamentals and hands-on application in language assessment research: 600</li>
+                        <li class="price-option" data-item-type="workshop-4" data-amount="0" data-currency="MOP" data-allow-free="true" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Free</li>
+                        <li class="price-option" data-item-type="banquet" data-amount="600" data-currency="MOP" data-label="Banquet">Banquet: 600</li>
                     </ul>
                 </div>
             </div>
@@ -269,15 +269,15 @@
 
         function currencyForPricingBlock(card) {
             var panel = card.closest("[data-pricing-currency]");
-            if (panel) return panel.getAttribute("data-pricing-currency") || "USD";
-            return "USD";
+            if (panel) return panel.getAttribute("data-pricing-currency") || "MOP";
+            return "MOP";
         }
 
         function setPricingCurrency(currency) {
             var supported = Array.prototype.some.call(pricingCurrency.options, function (option) {
                 return option.value === currency;
             });
-            if (!supported) currency = "USD";
+            if (!supported) currency = "MOP";
             document.querySelectorAll("#aala-pricing .pricing-currency-panel").forEach(function (panel) {
                 panel.hidden = panel.getAttribute("data-pricing-currency") !== currency;
             });
@@ -305,7 +305,7 @@
                 CompanyCart.clear();
                 cart = [];
             }
-            setPricingCurrency(cart.length ? cart[0].currency : "USD");
+            setPricingCurrency(cart.length ? cart[0].currency : "MOP");
         }
 
         function clearPriceSelection() {
@@ -409,7 +409,7 @@
 
                 if (li.hasAttribute("data-amount")) {
                     amount = Number(li.getAttribute("data-amount"));
-                    currency = li.getAttribute("data-currency") || "USD";
+                    currency = li.getAttribute("data-currency") || "MOP";
                     label = li.getAttribute("data-label") || li.textContent.trim();
                 } else {
                     var match = li.textContent.match(/:\s*([\d,]+)/);
@@ -577,7 +577,7 @@
         function addSelectedItemToCart(selection) {
             hideWarning();
             var amount = Number(selection.amount || 0);
-            var currency = selection.currency || "USD";
+            var currency = selection.currency || "MOP";
             var itemType = selection.itemType || "";
             var isBundle = !!selection.isBundle;
             var allowFree = !!selection.allowFree;

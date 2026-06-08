@@ -73,7 +73,7 @@
                         <tr data-service-id="aala-registration" data-service-name="AALA Conference registration">
                             <td>AALA Conference registration</td>
                             <td>Conference registration payment</td>
-                            <td>See fee cards below (MOP, GBP); pay in online purchase</td>
+                            <td>See fee cards below (MOP); pay in online purchase</td>
                         </tr>
                     </tbody>
                 </table>
@@ -87,17 +87,8 @@
             <p>Fee cards are <strong>clickable</strong>. Select a price line to add it directly to the cart below.</p>
             <p class="footnote">Early bird bundle price includes registration and conference banquet. Macau local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders.</p>
 
-            <div class="pricing-currency-choice">
-                <label for="pricingCurrency">Currency</label>
-                <select id="pricingCurrency" aria-label="Pricing currency">
-                    <option value="MOP" selected>MOP</option>
-                    <option value="GBP">GBP</option>
-                </select>
-            </div>
-
-            <div class="pricing-currency-panel" data-pricing-currency="MOP">
-                <p class="footnote">Click a price line to add it to the cart. All prices are in MOP.</p>
-                <div class="card-grid">
+            <p class="footnote">Click a price line to add it to the cart. All prices are in MOP.</p>
+            <div class="card-grid">
                 <div class="card">
                     <h3>Presenter</h3>
                     <p><strong>Non-Macau local</strong></p>
@@ -146,18 +137,12 @@
                         <li class="price-option" data-item-type="banquet" data-amount="600" data-currency="MOP" data-label="Banquet">Banquet: 600</li>
                     </ul>
                 </div>
-            </div>
-            </div>
-
-            <div class="pricing-currency-panel" data-pricing-currency="GBP" hidden>
-                <p class="footnote">Click a price line to add it to the cart.</p>
-                <div class="card-grid">
                 <div class="card">
+                    <h3>Sponsorship</h3>
                     <ul>
-                        <li class="price-option" data-item-type="sponsorship" data-amount="3000" data-currency="GBP" data-label="Sponsorship">Sponsorship: 3,000</li>
+                        <li class="price-option" data-item-type="sponsorship" data-amount="32278" data-currency="MOP" data-label="Sponsorship">Sponsorship: 32,278 <span class="price-original-currency">(GBP 3,000)</span></li>
                     </ul>
                 </div>
-            </div>
             </div>
         </section>
 
@@ -265,47 +250,13 @@
             configWarning.style.display = "none";
         }
 
-        var pricingCurrency = document.getElementById("pricingCurrency");
-
-        function currencyForPricingBlock(card) {
-            var panel = card.closest("[data-pricing-currency]");
-            if (panel) return panel.getAttribute("data-pricing-currency") || "MOP";
-            return "MOP";
-        }
-
-        function setPricingCurrency(currency) {
-            var supported = Array.prototype.some.call(pricingCurrency.options, function (option) {
-                return option.value === currency;
-            });
-            if (!supported) currency = "MOP";
-            document.querySelectorAll("#aala-pricing .pricing-currency-panel").forEach(function (panel) {
-                panel.hidden = panel.getAttribute("data-pricing-currency") !== currency;
-            });
-            if (pricingCurrency) pricingCurrency.value = currency;
-            clearPriceSelection();
-            updateBanquetAvailability();
-        }
-
-        function initPricingCurrency() {
-            if (!pricingCurrency) return;
-            pricingCurrency.addEventListener("change", function () {
-                var next = pricingCurrency.value;
-                var cart = CompanyCart.get();
-                if (cart.length && cart[0].currency !== next) {
-                    window.alert("Remove cart items before switching pricing currency.");
-                    setPricingCurrency(cart[0].currency);
-                    return;
-                }
-                setPricingCurrency(next);
-            });
+        function initCartCurrency() {
             var cart = CompanyCart.get();
-            if (cart.length && !Array.prototype.some.call(pricingCurrency.options, function (option) {
-                return option.value === cart[0].currency;
+            if (cart.length && cart.some(function (item) {
+                return item.currency !== "MOP";
             })) {
                 CompanyCart.clear();
-                cart = [];
             }
-            setPricingCurrency(cart.length ? cart[0].currency : "MOP");
         }
 
         function clearPriceSelection() {
@@ -391,9 +342,8 @@
             clearPriceSelection();
             document.querySelectorAll("#aala-pricing .price-option").forEach(function (li) {
                 var label = li.getAttribute("data-label");
-                var currency = li.getAttribute("data-currency") || currencyForPricingBlock(li.closest(".card"));
                 var selected = cart.some(function (item) {
-                    return item.title === label && item.currency === currency;
+                    return item.title === label && item.currency === "MOP";
                 });
                 if (selected) li.classList.add("is-selected");
             });
@@ -422,7 +372,7 @@
                     var prev = li.parentElement.previousElementSibling;
                     if (prev && prev.tagName === "P") locality = prev.textContent.trim() + " - ";
                     label = category + " - " + locality + tier;
-                    currency = currencyForPricingBlock(card);
+                    currency = "MOP";
                     li.setAttribute("data-label", label);
                     li.setAttribute("data-currency", currency);
                     if (!card.classList.contains("addon-card")) {
@@ -593,7 +543,7 @@
 
             var cart = CompanyCart.get();
             if (cart.length && cart[0].currency !== currency) {
-                window.alert("Please use the same currency for all items in your cart.");
+                window.alert("All items must use MOP pricing.");
                 return;
             }
 
@@ -622,7 +572,6 @@
             });
 
             resetEmailGate();
-            setPricingCurrency(currency);
             renderCart();
             var target = document.getElementById("online-purchase");
             if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -836,7 +785,7 @@
 
         emailBtn.addEventListener("click", openRegistrationEmail);
 
-        initPricingCurrency();
+        initCartCurrency();
         initPriceCardClicks();
         renderCart();
     })();

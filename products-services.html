@@ -166,6 +166,16 @@
                 <p style="margin-top: 0.75rem;"><strong>Total:</strong> <span id="cartTotal">0</span></p>
             </div>
 
+            <div id="checkoutContactWrap" class="personal-info" style="display: none;">
+                <div class="checkout-form-row">
+                    <div>
+                        <label for="payerContact">Contact (Email or Phone Number)</label>
+                        <input id="payerContact" type="text" autocomplete="email tel" required>
+                        <p class="form-help">Required by the bank for payment processing.</p>
+                    </div>
+                </div>
+            </div>
+
             <div id="personalInfoWrap" class="personal-info" style="display: none;">
                 <h3>Personal Information</h3>
                 <div class="checkout-form-row">
@@ -229,6 +239,8 @@
         var cartList = document.getElementById("cartList");
         var cartTotal = document.getElementById("cartTotal");
         var personalInfoWrap = document.getElementById("personalInfoWrap");
+        var checkoutContactWrap = document.getElementById("checkoutContactWrap");
+        var payerContact = document.getElementById("payerContact");
         var payerName = document.getElementById("payerName");
         var payerAffiliation = document.getElementById("payerAffiliation");
         var submissionIdWrap = document.getElementById("submissionIdWrap");
@@ -298,7 +310,7 @@
             registrationEmailSent = false;
         }
 
-        [payerName, payerAffiliation, submissionId, dietaryRequirements].forEach(function (input) {
+        [payerContact, payerName, payerAffiliation, submissionId, dietaryRequirements].forEach(function (input) {
             input.addEventListener("input", resetEmailGate);
         });
 
@@ -330,6 +342,7 @@
             var cart = CompanyCart.get();
             var hasItems = cart.length > 0;
             var showRegistrationFields = hasItems && !isSponsorshipOnly(cart);
+            checkoutContactWrap.style.display = hasItems ? "block" : "none";
             personalInfoWrap.style.display = showRegistrationFields ? "block" : "none";
             submissionIdWrap.style.display = showRegistrationFields && requiresSubmissionId(cart) ? "block" : "none";
             dietaryRequirementsWrap.style.display = showRegistrationFields && requiresDietaryRequirements(cart) ? "block" : "none";
@@ -577,7 +590,18 @@
             if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
         }
 
+        function validateContact() {
+            if (!payerContact.value.trim()) {
+                window.alert("Please enter your contact email or phone number.");
+                return false;
+            }
+            return true;
+        }
+
         function validatePersonalInformation(cart) {
+            if (!validateContact()) {
+                return false;
+            }
             var name = payerName.value.trim();
             var affiliation = payerAffiliation.value.trim();
             var needsSubmission = requiresSubmissionId(cart);
@@ -660,6 +684,7 @@
 
             var name = payerName.value.trim();
             var affiliation = payerAffiliation.value.trim();
+            var contact = payerContact.value.trim();
             var currency = cart[0].currency;
             var total = formatMoney(CompanyCart.total(), currency).replace(".00", "");
             var submission = requiresSubmissionId(cart) ? primarySubmissionId() : "";
@@ -676,6 +701,7 @@
                 + "Name: " + name + "\n"
                 + "Affiliation: " + affiliation
                 + submissionLine + "\n"
+                + "Contact: " + contact + "\n"
                 + "Payment type:\n" + registrationPaymentLines(cart) + "\n"
                 + "Payment amount: " + total + "\n"
                 + "Dietary requirements: " + dietaryLine + "\n\n"
@@ -725,6 +751,9 @@
             if (!validateCartForPayment(cart)) {
                 return;
             }
+            if (!validateContact()) {
+                return;
+            }
 
             var total = CompanyCart.total();
             if (total <= 0) {
@@ -748,6 +777,7 @@
             }
 
             var currency = cart[0].currency;
+            var contact = payerContact.value.trim();
             var description = cart.map(function (item) {
                 return item.title;
             }).join("; ");
@@ -761,6 +791,7 @@
                 cancelUrl: CANCEL_URL,
                 payerName: name,
                 payerAffiliation: affiliation,
+                payerContact: contact,
                 submissionId: requiresSubmissionId(cart) ? submissionId.value.trim() : "",
                 dietaryRequirements: requiresDietaryRequirements(cart) ? dietaryRequirements.value.trim() : "N/A",
                 description: description

@@ -523,11 +523,6 @@
                 return false;
             }
 
-            if (CONFERENCE_TYPES.indexOf(itemType) >= 0 && !CompanyCart.findByType("registration") && itemType !== "registration") {
-                window.alert("Please add a conference registration ticket before adding workshops or banquet.");
-                return false;
-            }
-
             if (itemType === "banquet") {
                 if (cartHasBundleRegistration(cart) || isBundle) {
                     window.alert("Banquet is included in early bird bundle tickets and cannot be added separately.");
@@ -717,9 +712,11 @@
 
         function validateCartForPayment(cart) {
             var hasSponsorship = cart.some(function (item) { return item.itemType === "sponsorship"; });
-            var hasRegistration = cart.some(function (item) { return item.itemType === "registration"; });
-            if (!hasSponsorship && !hasRegistration) {
-                window.alert("Please add a conference registration ticket or sponsorship before paying.");
+            var hasConferenceItem = cart.some(function (item) {
+                return CONFERENCE_TYPES.indexOf(item.itemType) >= 0;
+            });
+            if (!hasSponsorship && !hasConferenceItem) {
+                window.alert("Please add a conference registration ticket, add-on, or sponsorship before paying.");
                 return false;
             }
 

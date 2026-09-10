@@ -115,7 +115,7 @@
                         <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 600</li>
                         <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 600</li>
                         <li class="price-option price-option-multiline" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research">Workshop 3 — Unpacking deep learning and neural networks:<br>Fundamentals and hands-on application in language assessment research: 600</li>
-                        <li class="price-option" data-item-type="workshop-4" data-amount="0" data-currency="MOP" data-allow-free="true" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Free</li>
+                        <li class="price-option is-disabled" data-item-type="workshop-4" data-amount="0" data-currency="MOP" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)" aria-disabled="true" title="Workshop 4 is fully booked.">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Fully booked</li>
                         <li class="price-option" data-item-type="banquet" data-amount="600" data-currency="MOP" data-label="Banquet">Banquet: 600</li>
                     </ul>
                 </div>
@@ -510,9 +510,12 @@
 
                 li.classList.add("price-option");
                 li.setAttribute("role", "button");
-                li.setAttribute("tabindex", "0");
+                li.setAttribute("tabindex", li.getAttribute("aria-disabled") === "true" ? "-1" : "0");
 
                 function selectPrice() {
+                    if (li.getAttribute("aria-disabled") === "true") {
+                        return;
+                    }
                     if (itemType === "banquet" && cartHasBundleRegistration(CompanyCart.get())) {
                         window.alert("Banquet is included in early bird bundle tickets and cannot be added separately.");
                         return;
@@ -929,6 +932,7 @@
         isMacauLocal.addEventListener("change", resetRegistrationForChoiceChange);
 
         initCartCurrency();
+        CompanyCart.removeByType("workshop-4");
         renderRegistrationRates();
         initPriceCardClicks();
         renderCart();

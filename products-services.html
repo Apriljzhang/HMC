@@ -72,8 +72,8 @@
                         </tr>
                         <tr data-service-id="aala-registration" data-service-name="AALA Conference registration">
                             <td>AALA Conference registration</td>
-                            <td>Conference registration payment</td>
-                            <td>See fee cards below (MOP); pay in online purchase</td>
+                            <td>Registration and add-on payment</td>
+                            <td>Closed — the conference began on 19 September 2026</td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,11 +83,12 @@
         </section>
 
         <section class="content-block" id="aala-pricing">
-            <h2>AALA Conference registration fees</h2>
-            <p class="early-bird-notice"><strong>Early-bird registration has been extended to 31 July 2026.</strong></p>
-            <p>Choose your role first. The applicable registration rates will then appear below.</p>
+            <h2 id="aalaPricingHeading">AALA Conference registration — closed</h2>
+            <p class="registration-closed-notice" role="status"><strong>AALA 2026 registration is now closed.</strong> The conference began on 19 September 2026. No new conference registrations or add-on purchases are being accepted.</p>
+            <p>The registration and add-on options below are no longer available.</p>
             <p class="footnote">The early-bird bundle includes registration and the conference banquet. Macau local rates apply to Macau residents, students studying in Macau, and Macau blue-card holders. All prices are in MOP.</p>
 
+            <fieldset class="registration-closed-options" disabled aria-disabled="true" aria-labelledby="aalaPricingHeading">
             <div class="registration-chooser">
                 <h3>1 Choose your role</h3>
                 <div class="role-choice-grid" id="registrationRoleChoices">
@@ -107,16 +108,17 @@
                     <ul class="rate-option-list" id="registrationRateOptions"></ul>
                 </div>
             </div>
+            </fieldset>
 
             <div class="card-grid">
                 <div class="card addon-card">
-                    <h3 id="optionalAddonsTitle">3 Optional add-ons</h3>
+                    <h3 id="optionalAddonsTitle">Optional add-ons — closed</h3>
                     <ul>
-                        <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 600</li>
-                        <li class="price-option" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 600</li>
-                        <li class="price-option price-option-multiline" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research">Workshop 3 — Unpacking deep learning and neural networks:<br>Fundamentals and hands-on application in language assessment research: 600</li>
-                        <li class="price-option is-disabled" data-item-type="workshop-4" data-amount="0" data-currency="MOP" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)" aria-disabled="true" title="Workshop 4 is fully booked.">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Fully booked</li>
-                        <li class="price-option" data-item-type="banquet" data-amount="600" data-currency="MOP" data-label="Banquet">Banquet: 600</li>
+                        <li class="price-option is-disabled" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 1 - Assessing English language students with Specific Learning Difficulties" aria-disabled="true" tabindex="-1" title="AALA 2026 registration is closed.">Workshop 1 — Assessing English language students with Specific Learning Difficulties: 600</li>
+                        <li class="price-option is-disabled" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 2 - Validity and validation in language assessment: Concepts, evidence, and argument-based approaches" aria-disabled="true" tabindex="-1" title="AALA 2026 registration is closed.">Workshop 2 — Validity and validation in language assessment: Concepts, evidence, and argument-based approaches: 600</li>
+                        <li class="price-option price-option-multiline is-disabled" data-item-type="workshop-parallel" data-amount="600" data-currency="MOP" data-label="Workshop 3 - Unpacking deep learning and neural networks: Fundamentals and hands-on application in language assessment research" aria-disabled="true" tabindex="-1" title="AALA 2026 registration is closed.">Workshop 3 — Unpacking deep learning and neural networks:<br>Fundamentals and hands-on application in language assessment research: 600</li>
+                        <li class="price-option is-disabled" data-item-type="workshop-4" data-amount="0" data-currency="MOP" data-label="Workshop 4 - Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21)" aria-disabled="true" tabindex="-1" title="AALA 2026 registration is closed.">Workshop 4 — Item Analysis and Test Equating in the Age of AI (Post-Conference, Sept 21): Closed</li>
+                        <li class="price-option is-disabled" data-item-type="banquet" data-amount="600" data-currency="MOP" data-label="Banquet" aria-disabled="true" tabindex="-1" title="AALA 2026 registration is closed.">Banquet: 600</li>
                     </ul>
                 </div>
                 <div class="card">
@@ -213,6 +215,8 @@
     <script>
     (function () {
         var PAYMENT_ENDPOINT = "https://hmc-mu.vercel.app/create-payment";
+        var REGISTRATION_CLOSED = true;
+        var CONFERENCE_TYPES = ["registration", "workshop-parallel", "workshop-4", "banquet"];
         var EARLY_BIRD_DEADLINE = "2026-07-31";
         var EARLY_BIRD_DEADLINE_LABEL = "31 July 2026";
         var REGISTRATION_FEES = {
@@ -305,7 +309,17 @@
             }
             li.textContent = rateLabel + ": MOP " + amount;
 
+            if (REGISTRATION_CLOSED) {
+                li.classList.add("is-disabled");
+                li.setAttribute("aria-disabled", "true");
+                li.setAttribute("tabindex", "-1");
+                li.setAttribute("title", "AALA 2026 registration is closed.");
+            }
+
             function selectRate() {
+                if (REGISTRATION_CLOSED) {
+                    return;
+                }
                 if ((rateKey === "early" || isBundle) && !isEarlyBirdAllowed()) {
                     window.alert("Early-bird registration closed on " + EARLY_BIRD_DEADLINE_LABEL + " (China time). Please choose the regular rate.");
                     renderRegistrationRates();
@@ -332,6 +346,14 @@
         }
 
         function renderRegistrationRates() {
+            if (REGISTRATION_CLOSED) {
+                macauLocalChoice.style.display = "none";
+                registrationRateSection.style.display = "none";
+                optionalAddonsTitle.textContent = "Optional add-ons — closed";
+                registrationRateOptions.innerHTML = "";
+                return;
+            }
+
             var role = getSelectedRegistrationRole();
             var addonsOnly = role === "addons-only";
             var hasRegistrationRole = Boolean(role && !addonsOnly);
@@ -389,8 +411,6 @@
             });
         }
 
-        var CONFERENCE_TYPES = ["registration", "workshop-parallel", "workshop-4", "banquet"];
-
         function cartHasBundleRegistration(cart) {
             return cart.some(function (item) {
                 return item.itemType === "registration" && item.isBundle;
@@ -404,6 +424,16 @@
         }
 
         function updateBanquetAvailability() {
+            if (REGISTRATION_CLOSED) {
+                document.querySelectorAll('#aala-pricing li[data-item-type="banquet"]').forEach(function (li) {
+                    li.classList.add("is-disabled");
+                    li.setAttribute("aria-disabled", "true");
+                    li.setAttribute("tabindex", "-1");
+                    li.setAttribute("title", "AALA 2026 registration is closed.");
+                });
+                return;
+            }
+
             var disabled = cartHasBundleRegistration(CompanyCart.get());
             document.querySelectorAll('#aala-pricing li[data-item-type="banquet"]').forEach(function (li) {
                 if (disabled) {
@@ -655,6 +685,11 @@
             var isBundle = !!selection.isBundle;
             var allowFree = !!selection.allowFree;
 
+            if (REGISTRATION_CLOSED && CONFERENCE_TYPES.indexOf(itemType) >= 0) {
+                window.alert("AALA 2026 registration is closed. No new registrations or add-on purchases are being accepted.");
+                return;
+            }
+
             if (!allowFree && (!amount || amount <= 0)) {
                 window.alert("Please enter a valid price greater than 0.");
                 return;
@@ -825,6 +860,15 @@
         }
 
         function validateCartForPayment(cart) {
+            if (REGISTRATION_CLOSED && cartHasConferenceItems(cart)) {
+                CONFERENCE_TYPES.forEach(function (type) {
+                    CompanyCart.removeByType(type);
+                });
+                renderCart();
+                window.alert("AALA 2026 registration is closed. Conference registration and add-on items have been removed from your cart.");
+                return false;
+            }
+
             if (!isEarlyBirdAllowed() && cart.some(function (item) {
                 return item.itemType === "registration" && /early bird/i.test(item.title);
             })) {
@@ -932,7 +976,17 @@
         isMacauLocal.addEventListener("change", resetRegistrationForChoiceChange);
 
         initCartCurrency();
-        CompanyCart.removeByType("workshop-4");
+        if (REGISTRATION_CLOSED) {
+            CONFERENCE_TYPES.forEach(function (type) {
+                CompanyCart.removeByType(type);
+            });
+            registrationRoleChoices.querySelectorAll("input").forEach(function (input) {
+                input.disabled = true;
+                input.setAttribute("aria-disabled", "true");
+            });
+            isMacauLocal.disabled = true;
+            isMacauLocal.setAttribute("aria-disabled", "true");
+        }
         renderRegistrationRates();
         initPriceCardClicks();
         renderCart();

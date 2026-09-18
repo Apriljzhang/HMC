@@ -302,6 +302,29 @@ a:hover {
     margin-top: 0;
 }
 
+.registration-closed-notice {
+    margin: 0 0 1rem;
+    padding: 1rem 1.1rem;
+    border-left: 4px solid #b42318;
+    border-radius: 4px;
+    background: #fff3f2;
+    color: #7a271a;
+    line-height: 1.55;
+}
+
+.registration-closed-options {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0.58;
+}
+
+.registration-closed-options input,
+.registration-closed-options label {
+    cursor: not-allowed;
+}
+
 .role-choice-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
